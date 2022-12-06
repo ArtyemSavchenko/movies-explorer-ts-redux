@@ -1,7 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
 
-import App from './App';
+import { router } from './routes/routes';
+import NotificationsProvider from './components/shared/Notifications/NotificationsProvider';
 
 import './index.css';
 
@@ -10,7 +12,8 @@ const root = createRoot(container);
 
 root.render(
   <StrictMode>
-      <App />
+    <NotificationsProvider delayClose={3000}>
+      <RouterProvider router={router} />
+    </NotificationsProvider>
   </StrictMode>
 );
-
