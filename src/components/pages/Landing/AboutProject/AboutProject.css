@@ -1,0 +1,137 @@
+.about-project {
+  padding: 70px 18px;
+}
+
+.about-project__text-content-box {
+  display: flex;
+  flex-direction: column;
+  column-gap: 30px;
+}
+
+.about-project__text-box {
+  margin-bottom: 58px;
+
+  flex-grow: 1;
+}
+
+.about-project__subheading {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.22;
+  letter-spacing: -.04em;
+
+  margin-top: 0;
+  margin-bottom: 16px;
+  max-width: 255px;
+}
+
+.about-project__time-line {
+  display: grid;
+  grid-template-rows: repeat(2, max-content);
+  grid-template-columns: 1fr 4fr;
+  justify-items: stretch;
+  row-gap: 10px;
+
+  font-size: 11px;
+  line-height: 1.18;
+  text-align: center;
+}
+
+.about-project__duration {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.18;
+
+  margin: 0;
+  padding: 11px 10px;
+
+  background-color: #303030;
+}
+
+.about-project__duration_accent {
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.about-project__time-line-caption {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.18;
+  color: #a0a0a0;
+
+  margin: 0;
+}
+
+.about-project__heading {
+  margin-bottom: 60px;
+}
+
+@media(min-width: 550px) {
+  .about-project__text-content-box {
+    flex-direction: row;
+  }
+}
+
+@media (min-width: 768px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+
+  .about-project__heading {
+    margin-bottom: 70px;
+  }
+
+  .about-project__text-box {
+    margin-bottom: 93px;
+  }
+
+  .about-project__subheading {
+    font-size: 20px;
+    line-height: 1.2;
+
+    max-width: 100%;
+    margin-bottom: 22px;
+  }
+
+  .about-project__time-line {
+    row-gap: 14px;
+  }
+
+  .about-project__duration {
+    font-size: 14px;
+    line-height: 1.21;
+  }
+
+  .about-project__time-line-caption {
+    font-size: 14px;
+    line-height: 1.21;
+  }
+}
+
+@media (min-width: 1280px) {
+  .about-project {
+    padding: 110px 70px;
+  }
+
+  .about-project__text-box {
+    margin-bottom: 110px;
+  }
+
+  .about-project__subheading {
+    margin-bottom: 26px;
+
+    max-width: 550px;
+  }
+
+  .about-project__description {
+    max-width: 550px;
+  }
+
+  .about-project__time-line {
+    row-gap: 23px;
+  }
+
+  .about-project__time-line-caption {
+    font-weight: 500;
+  }
+}

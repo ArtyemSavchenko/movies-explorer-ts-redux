@@ -1,0 +1,143 @@
+.promo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+  padding: 70px 10px 30px;
+
+  background-color: var(--promo-bg-color);
+}
+
+.promo__img {
+  width: 210px;
+  aspect-ratio: 210/206;
+
+  margin-bottom: 44px;
+}
+
+.promo__heading {
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.26;
+  letter-spacing: -.04em;
+  text-align: center;
+
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.promo__subheading {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.23;
+  text-align: center;
+
+  opacity: .5;
+  margin-top: 0;
+  margin-bottom: 80px;
+  max-width: 260px;
+}
+
+.promo__no-wrap {
+  white-space: nowrap;
+}
+
+.promo__btn-more {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  text-decoration: none;
+
+  padding: 10px 20px;
+  border: 1px solid rgba(255 255 255 / .6);
+  border-radius: 3px;
+
+  transition-property: background-color, color;
+  transition-duration: var(--out-duration);
+  transition-timing-function: linear;
+}
+
+@media (any-hover: hover) {
+  .promo__btn-more:hover {
+    background-color: #fff;
+    color: var(--dark-bg-color);
+    transition-duration: var(--in-duration);
+  }
+}
+
+.promo__btn-more:active {
+  transform: scale(0.96);
+  -webkit-tap-highlight-color: transparent;
+  transition-duration: 0.15s;
+}
+
+@media (min-width: 768px) {
+  .promo {
+    padding-left: 44px;
+    padding-right: 44px;
+  }
+
+  .promo__img {
+    width: 310px;
+    margin-bottom: 48px;
+  }
+
+  .promo__heading {
+    font-size: 40px;
+    line-height: 1.25;
+    margin-bottom: 22px;
+    max-width: 680px;
+  }
+
+  .promo__subheading {
+    margin-bottom: 92px;
+  }
+
+  .promo__btn-more {
+    margin-bottom: 46px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .promo {
+    padding: 75px 70px;
+    display: grid;
+    grid-template-columns: minmax(min-content, 1000px) min-content;
+    column-gap: 20px;
+    grid-template-rows: min-content 1fr min-content;
+    justify-items: start;
+    align-items: start;
+    justify-content: center;
+  }
+
+  .promo__img {
+    grid-column: 2/-1;
+    grid-row: 1/-1;
+    margin-bottom: 0;
+  }
+
+  .promo__heading {
+    text-align: left;
+    font-size: 50px;
+    line-height: 1.16;
+    max-width: 640px;
+    margin-bottom: 36px;
+  }
+
+  .promo__subheading {
+    text-align: left;
+    max-width: 310px;
+    margin-bottom: 146px;
+  }
+
+  .promo__btn-more {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1440px) {
+  .promo__img {
+    width: 400px;
+  }
+}

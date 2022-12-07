@@ -1,0 +1,21 @@
+.burger-btn {
+  cursor: pointer;
+  padding: 8px;
+  background-color: transparent;
+  border: none;
+}
+
+.burger-btn__svg {
+  display: block;
+  width: 28px;
+  height: 23px;
+  fill: #fff;
+  transition: fill var(--out-duration) linear;
+}
+
+@media (any-hover: hover) {
+  .burger-btn:hover > .burger-btn__svg {
+    fill: var(--ui-accent-color);
+    transition: fill var(--in-duration) linear;
+  }
+}

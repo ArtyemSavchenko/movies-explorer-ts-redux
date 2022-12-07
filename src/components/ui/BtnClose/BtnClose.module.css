@@ -1,0 +1,22 @@
+.btnClose {
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  padding: 14px;
+}
+
+.btnClose__svg {
+  display: block;
+  fill: #fff;
+  width: 18px;
+  height: 18px;
+  transition: fill var(--out-duration) linear;
+}
+
+@media(any-hover: hover) {
+  .btnClose:hover > .btnClose__svg {
+    fill: var(--ui-accent-color);
+    transition: fill var(--in-duration) linear;
+  }
+}

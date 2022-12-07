@@ -1,0 +1,41 @@
+.movies {
+  padding: 80px 10px 0;
+}
+
+.movies__search-form {
+  padding-bottom: 50px;
+  border-bottom: 1px solid #424242;
+  margin: 0 4px 50px;
+}
+
+.movies__more-btn {
+  display: none;
+  width: 240px;
+  margin: 80px auto 80px;
+  padding: 10px 20px;
+
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #2f2f2f;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.movies__more-btn_visible {
+  display: block;
+}
+
+@media (any-hover: hover) {
+  .movies__more-btn {
+    opacity: 0.8;
+  }
+}
+
+@media (min-width: 768px) {
+  .movies__more-btn {
+    width: 320px;
+  }
+}

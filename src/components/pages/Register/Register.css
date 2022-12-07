@@ -1,0 +1,95 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+  padding: 56px 30px 30px;
+  max-width: 456px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.register__logo-link {
+  margin-bottom: 50px;
+}
+
+.register__title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.2;
+
+  margin-top: 0;
+  margin-bottom: 80px;
+}
+
+.register__form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.register__fieldset {
+  flex-grow: 1;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.register__input:not(:last-of-type) {
+  margin-bottom: 9px;
+}
+
+.register__caption {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.25;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #8b8b8b;
+  align-self: center;
+}
+
+.register__caption-link {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+}
+
+.register__submit-btn {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.25;
+
+  margin-bottom: 14px;
+}
+
+@media (min-width: 768px) {
+  .register {
+    align-items: start;
+    max-height: 560px;
+    align-self: center;
+    height: 100%;
+    padding: 0 30px;
+  }
+
+  .register__logo-link {
+    margin-bottom: 40px;
+  }
+
+  .register__title {
+    margin-bottom: 40px;
+  }
+
+  .register__submit-btn {
+    font-size: 14px;
+    line-height: 1.21;
+    margin-bottom: 16px;
+  }
+
+  .register__caption {
+    font-size: 14px;
+    line-height: 1.21;
+  }
+}

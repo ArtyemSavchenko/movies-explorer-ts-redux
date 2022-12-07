@@ -1,0 +1,63 @@
+.profile-input {
+  display: grid;
+  grid-template-areas:
+    'label input'
+    'err err';
+  grid-template-columns: min-content 1fr;
+  column-gap: 10px;
+  padding: 16px 0 3px;
+  box-sizing: border-box;
+  max-width: 410px;
+  width: 100%;
+
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.18;
+  white-space: nowrap;
+}
+
+.profile-input:not(:last-of-type) {
+  border-bottom: 1px solid #424242;
+}
+
+.profile-input__input {
+  grid-area: input;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  width: 100%;
+
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-align: right;
+}
+
+.profile-input__input:focus + .profile-input__label {
+  color: var(--ui-accent-color);
+}
+
+.profile-input__input:focus {
+  outline: none;
+}
+
+.profile-input__label {
+  grid-area: label;
+}
+
+.profile-input__err {
+  grid-area: err;
+  grid-column: span 2;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 2px;
+  min-height: 13px;
+  max-width: 100%;
+  white-space: break-spaces;
+
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1;
+
+  color: var(--attention-color);
+}

@@ -1,0 +1,22 @@
+.empty {
+  width: 100%;
+  display: grid;
+  place-content: center;
+}
+
+.empty__heading {
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(20px, calc(100vw * 0.1), 84px);
+  line-height: 1.2;
+  text-align: center;
+  margin-bottom: 0.4em;
+}
+
+.empty__text {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(16px, calc(100vw * 0.03), 26px);
+  line-height: 1.2;
+  text-align: center;
+}

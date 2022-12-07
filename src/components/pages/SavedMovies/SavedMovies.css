@@ -1,0 +1,9 @@
+.saved-movies {
+  padding: 80px 10px 0;
+}
+
+.saved-movies__search-form {
+  padding-bottom: 50px;
+  border-bottom: 1px solid #424242;
+  margin: 0 4px 50px;
+}

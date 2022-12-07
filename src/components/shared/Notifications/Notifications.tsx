@@ -8,10 +8,10 @@ import { INotificationElement } from './types/notification';
 import styles from './Notifications.module.css';
 
 interface INotificationsProps {
-  notifications: INotificationElement[],
+  notifications: INotificationElement[];
   /**Функция, которая фильтрует массив уведомлений от уведомления с заданным id */
-  closeNotification: (id: number) => void,
-  delayClose?: number,
+  closeNotification: (id: number) => void;
+  delayClose?: number;
 }
 
 export const Notifications: FC<INotificationsProps> = ({
@@ -26,7 +26,11 @@ export const Notifications: FC<INotificationsProps> = ({
           {...item}
           key={item.id}
           onClose={closeNotification}
-          delayClose={(item.delayClose && item.delayClose >= 0)  ? item.delayClose : delayClose}
+          delayClose={
+            item.delayClose && item.delayClose >= 0
+              ? item.delayClose
+              : delayClose
+          }
         />
       ))}
     </div>,

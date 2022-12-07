@@ -1,0 +1,51 @@
+.sign-menu {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 14px;
+}
+
+.sign-menu__link {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.sign-menu__btn {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #000;
+
+  padding: 5px 12px;
+  border-radius: 3px;
+
+  background-color: var(--accent-color);
+
+  transition: opacity var(--out-duration) linear;
+}
+
+@media (any-hover: hover) {
+  .sign-menu__btn:hover {
+    color: #000;
+    opacity: .8;
+    transition: opacity var(--in-duration) linear;
+  }
+}
+
+@media (min-width: 768px) {
+  .sign-menu {
+    column-gap: 30px;
+  }
+
+  .sign-menu__link {
+    font-size: 12px;
+    line-height: 1.33;
+  }
+
+  .sign-menu__btn {
+    font-size: 12px;
+    line-height: 1.33;
+    padding: 8px 20px;
+  }
+}
