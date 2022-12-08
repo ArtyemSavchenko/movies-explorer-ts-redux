@@ -38,7 +38,7 @@ const NotificationsProvider: FC<INotificationsProvider> = ({
         id: newId,
       };
 
-      if (delayClose && delayClose >= 0) {
+      if ((delayClose || delayClose === 0) && delayClose >= 0) {
         newNotification.delayClose = delayClose;
       }
 

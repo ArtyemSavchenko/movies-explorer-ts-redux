@@ -27,7 +27,7 @@ export const Notifications: FC<INotificationsProps> = ({
           key={item.id}
           onClose={closeNotification}
           delayClose={
-            item.delayClose && item.delayClose >= 0
+            (item.delayClose || item.delayClose === 0) && item.delayClose >= 0
               ? item.delayClose
               : delayClose
           }
