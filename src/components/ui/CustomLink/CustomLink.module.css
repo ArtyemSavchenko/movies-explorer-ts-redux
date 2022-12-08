@@ -25,8 +25,8 @@
 }
 
 .customLink:disabled {
-  cursor: default;
   opacity: .4;
+  pointer-events: none;
 }
 
 .customLink_type_accent {
@@ -42,10 +42,6 @@
     opacity: .7;
 
     transition: opacity var(--in-duration) linear;
-  }
-
-  .customLink:disabled:hover {
-    opacity: .4;
   }
 }
 

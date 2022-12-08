@@ -1,15 +1,14 @@
-.input-field {
+.inputField {
   display: block;
   position: relative;
   padding-top: 12px;
-
 
   font-weight: 400;
   font-size: 14px;
   line-height: 1.2;
 }
 
-.input-field__input {
+.inputField__input {
   display: block;
   box-sizing: border-box;
   border: none;
@@ -22,15 +21,15 @@
   margin-bottom: 5px;
 }
 
-.input-field__input_error {
+.inputField__input_error {
   color: var(--attention-color);
 }
 
-.input-field__input:focus {
+.inputField__input:focus {
   border-bottom: 1px solid var(--ui-accent-color);
 }
 
-.input-field__label {
+.inputField__label {
   display: block;
   position: absolute;
   top: 17px;
@@ -40,13 +39,13 @@
   cursor: text;
 }
 
-.input-field__input:not(:placeholder-shown) + .input-field__label,
-.input-field__input:focus + .input-field__label {
+.inputField__input:not(:placeholder-shown) + .inputField__label,
+.inputField__input:focus + .inputField__label {
   font-size: 10px;
   top: 0;
 }
 
-.input-field__error {
+.inputField__error {
   font-size: 10px;
   color: var(--attention-color);
   margin: 0;

@@ -26,6 +26,9 @@
   background-color: var(--dark-bg-color);
 
   min-height: 100vh;
+
+  padding: 20px;
+
 }
 
 body {
@@ -37,7 +40,7 @@ body {
   color: inherit;
 }
 
-*:focus-visible {
+/* *:focus-visible {
   outline: 3px var(--ui-accent-color) solid;
   outline-offset: 5px;
-}
+} */

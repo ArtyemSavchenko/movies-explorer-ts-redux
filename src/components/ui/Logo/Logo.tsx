@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
+import classNames from 'classnames';
 
 import { COLORS } from '../../../utils/constants';
 
-import './Logo.css';
+import styles from './Logo.module.css';
 
-const Logo = ({ extraClass = '', funny = false }) => {
+interface LogoProps {
+  extraClass?: string;
+  funny?: boolean;
+}
+
+const Logo: FC<LogoProps> = ({ extraClass, funny }) => {
   const [fill, setFill] = useState('');
 
   const getRandomColor = () => {
@@ -21,7 +27,7 @@ const Logo = ({ extraClass = '', funny = false }) => {
 
   return (
     <svg
-      className={`logo ${extraClass}`}
+      className={classNames(styles.logo, extraClass)}
       viewBox="0 0 38 38"
       xmlns="http://www.w3.org/2000/svg"
       onPointerEnter={getRandomColor}

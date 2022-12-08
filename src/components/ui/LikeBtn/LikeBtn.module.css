@@ -1,4 +1,4 @@
-.like-btn {
+.likeBtn {
   height: 30px;
   min-width: 100px;
   border-radius: 30px;
@@ -10,19 +10,24 @@
   border: none;
   padding: 9px 15px;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
 
   font-weight: 400;
   font-size: 12px;
   line-height: 1;
 }
 
+.likeBtn:disabled {
+  pointer-events: none;
+}
+
 @media (any-hover: hover) {
-  .like-btn:hover {
+  .likeBtn:hover {
     opacity: 0.8;
   }
 }
 
-.like-btn::before {
+.likeBtn::before {
   position: absolute;
   display: block;
   z-index: 1;
@@ -45,7 +50,7 @@
   transition: transform step-end var(--out-duration), opacity var(--out-duration);
 }
 
-.like-btn_is-liked::before {
+.likeBtn_isLiked::before {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
   transition: transform var(--in-duration), opacity step-start var(--in-duration);

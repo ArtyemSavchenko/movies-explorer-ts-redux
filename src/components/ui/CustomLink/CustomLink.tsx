@@ -1,15 +1,15 @@
-import classNames from 'classnames';
 import { FC, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 import styles from './CustomLink.module.css';
 
 type CustomLinkType = 'button' | 'internal-link' | 'external-link';
-type CustomLinkAppearance = 'attention' | 'accent' | 'default' | null;
+type CustomLinkAppearance = 'attention' | 'accent';
 
 export interface CustomLinkProps {
   feature: CustomLinkType;
-  appearance: CustomLinkAppearance;
+  appearance?: CustomLinkAppearance;
   children?: ReactNode;
   extraClass?: string;
   isLoading?: boolean;
@@ -19,10 +19,10 @@ export interface CustomLinkProps {
 
 export const CustomLink: FC<CustomLinkProps> = ({
   feature,
-  appearance = null,
-  isLoading = false,
-  disabled = false,
-  extraClass = null,
+  appearance,
+  isLoading,
+  disabled,
+  extraClass,
   children,
   ...restProps
 }) => {

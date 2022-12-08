@@ -9,7 +9,7 @@ interface BtnCloseProps extends UIButton {
   extraClass?: string;
 }
 
-const BtnClose: FC<BtnCloseProps> = ({ extraClass = null, ...restProps }) => {
+const BtnClose: FC<BtnCloseProps> = ({ extraClass, ...restProps }) => {
   console.log(extraClass);
 
   return (
