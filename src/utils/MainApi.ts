@@ -8,7 +8,10 @@ const getToken = () => {
   return `Bearer ${localStorage.getItem('jwt')}`;
 };
 
-export const authorize = async (email: string, password: string) => {
+export const authorize = async (
+  email: string,
+  password: string
+): Promise<IToken> => {
   const res = await fetch(`${MAIN_BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -20,10 +23,14 @@ export const authorize = async (email: string, password: string) => {
     }),
   });
 
-  return checkApiError<IToken>(res);
+  return checkApiError(res);
 };
 
-export const register = async (email: string, password: string, name: string) => {
+export const register = async (
+  email: string,
+  password: string,
+  name: string
+): Promise<ICurrentUser> => {
   const res = await fetch(`${MAIN_BASE_URL}/signup`, {
     method: 'POST',
     headers: {
@@ -36,20 +43,23 @@ export const register = async (email: string, password: string, name: string) =>
     }),
   });
 
-  return checkApiError<ICurrentUser>(res);
+  return checkApiError(res);
 };
 
-export const getUser = async () => {
+export const getUser = async (): Promise<ICurrentUser> => {
   const res = await fetch(`${MAIN_BASE_URL}/users/me`, {
     headers: {
       Authorization: getToken(),
     },
   });
 
-  return checkApiError<ICurrentUser>(res);
+  return checkApiError(res);
 };
 
-export const patchUser = async (name: string, email: string) => {
+export const patchUser = async (
+  name: string,
+  email: string
+): Promise<ICurrentUser> => {
   const res = await fetch(`${MAIN_BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: {
@@ -62,10 +72,10 @@ export const patchUser = async (name: string, email: string) => {
     }),
   });
 
-  return checkApiError<ICurrentUser>(res);
+  return checkApiError(res);
 };
 
-export const likeMovie = async (movie: IMovieForLike) => {
+export const likeMovie = async (movie: IMovieForLike): Promise<ILikedMovie> => {
   const res = await fetch(`${MAIN_BASE_URL}/movies`, {
     method: 'POST',
     headers: {
@@ -87,7 +97,7 @@ export const likeMovie = async (movie: IMovieForLike) => {
     }),
   });
 
-  return checkApiError<ILikedMovie>(res);
+  return checkApiError(res);
 };
 
 export const dislikeMovie = async (movieId: string) => {
@@ -101,12 +111,12 @@ export const dislikeMovie = async (movieId: string) => {
   return checkApiError(res);
 };
 
-export const getLikedMovies = async () => {
+export const getLikedMovies = async (): Promise<ILikedMovie[]> => {
   const res = await fetch(`${MAIN_BASE_URL}/movies`, {
     headers: {
       Authorization: getToken(),
     },
   });
 
-  return checkApiError<ILikedMovie[]>(res);
-}
+  return checkApiError(res);
+};
