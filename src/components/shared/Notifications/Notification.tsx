@@ -4,11 +4,11 @@ import { INotificationElement, NOTIFICATION_TYPE } from './types/notification';
 
 import styles from './Notification.module.css';
 
-export interface INotificationProps extends INotificationElement {
+export interface NotificationProps extends INotificationElement {
   onClose: (id: number) => void;
 }
 
-const Notification: FC<INotificationProps> = ({
+const Notification: FC<NotificationProps> = ({
   id,
   type,
   heading,

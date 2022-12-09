@@ -7,14 +7,14 @@ import { INotificationElement } from './types/notification';
 
 import styles from './Notifications.module.css';
 
-interface INotificationsProps {
+interface NotificationsProps {
   notifications: INotificationElement[];
   /**Функция, которая фильтрует массив уведомлений от уведомления с заданным id */
   closeNotification: (id: number) => void;
   delayClose?: number;
 }
 
-export const Notifications: FC<INotificationsProps> = ({
+export const Notifications: FC<NotificationsProps> = ({
   notifications,
   closeNotification,
   delayClose = 5000,

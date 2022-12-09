@@ -1,4 +1,4 @@
-.profile-input {
+.profileInput {
   display: grid;
   grid-template-areas:
     'label input'
@@ -16,11 +16,11 @@
   white-space: nowrap;
 }
 
-.profile-input:not(:last-of-type) {
+.profileInput:not(:last-of-type) {
   border-bottom: 1px solid #424242;
 }
 
-.profile-input__input {
+.profileInput__input {
   grid-area: input;
   background-color: transparent;
   border: none;
@@ -33,19 +33,19 @@
   text-align: right;
 }
 
-.profile-input__input:focus + .profile-input__label {
+.profileInput__input:focus + .profileInput__label {
   color: var(--ui-accent-color);
 }
 
-.profile-input__input:focus {
+.profileInput__input:focus {
   outline: none;
 }
 
-.profile-input__label {
+.profileInput__label {
   grid-area: label;
 }
 
-.profile-input__err {
+.profileInput__err {
   grid-area: err;
   grid-column: span 2;
   margin-top: 0;

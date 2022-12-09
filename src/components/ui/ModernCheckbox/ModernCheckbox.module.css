@@ -1,4 +1,4 @@
-.check-box {
+.checkbox {
   display: flex;
   column-gap: 14px;
   align-items: center;
@@ -9,7 +9,7 @@
   --unchecked-disabled-color: #ddd;
 }
 
-.check-box__switcher {
+.checkbox__switcher {
   font-size: inherit;
   appearance: none;
   height: 14px;
@@ -25,19 +25,18 @@
   cursor: pointer;
 }
 
-.check-box__switcher:checked {
+.checkbox__switcher:checked {
   background-position: center right 2px;
   background-color: var(--checked-color);
 }
 
-.check-box__switcher:disabled:checked {
+.checkbox__switcher:disabled:checked {
   background-position: center right 2px;
   background-color: var(--checked-disabled-color);
-  cursor: pointer;
 }
 
-.check-box__switcher:disabled {
+.checkbox__switcher:disabled {
   background-position: center left 2px;
   background-color: var(--unchecked-disabled-color);
-  cursor: pointer;
+  pointer-events: none;
 }
