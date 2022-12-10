@@ -1,15 +1,15 @@
-.search-movie-form {
+.searchMovieForm {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.search-movie-form__search-box {
+.searchMovieForm__searchBox {
   position: relative;
   align-self: stretch;
 }
 
-.search-movie-form__input {
+.searchMovieForm__input {
   width: 100%;
   height: 46px;
   border-radius: 40px;
@@ -22,16 +22,16 @@
   line-height: 1.55;
 }
 
-.search-movie-form__input::placeholder {
+.searchMovieForm__input::placeholder {
   color: #8b8b8b;
 }
 
-.search-movie-form__input:focus {
+.searchMovieForm__input:focus {
   box-shadow: 0 0 0 2px var(--ui-accent-color) inset;
   outline: none;
 }
 
-.search-movie-form__submit-btn {
+.searchMovieForm__submitBtn {
   width: 34px;
   height: 34px;
   padding: 0;
@@ -52,12 +52,12 @@
 }
 
 @media (any-hover: hover) {
-  .search-movie-form__submit-btn:hover {
+  .searchMovieForm__submitBtn:hover {
     opacity: 0.8;
   }
 }
 
-.search-movie-form__err {
+.searchMovieForm__err {
   font-size: 11px;
   line-height: 1.36;
   margin: 3px auto 25px 20px;
@@ -66,14 +66,14 @@
   color: var(--attention-color);
 }
 
-.search-movie-form__short-movies {
+.searchMovieForm__shortMovies {
   font-weight: 400;
   font-size: 11px;
   line-height: 1.64;
 }
 
 @media (min-width: 768px) {
-  .search-movie-form__short-movies {
+  .searchMovieForm__shortMovies {
     font-size: 18px;
   }
 }

@@ -1,18 +1,26 @@
-import { useContext, useMemo, useState } from 'react';
+import { FC, useContext, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import classNames from 'classnames';
 
 import LikeBtn from '../ui/LikeBtn/LikeBtn';
 
 import { CurrentUser } from '../../contexts/CurrentUserContext';
+import { ICard } from '../../types/movie';
 
 import { convertDuration } from '../../utils/convertDuration';
-import { MOVIE_COVER_URL } from '../../utils/constants';
 
-import './MovieCard.css';
+import styles from './MovieCard.module.css';
 
-const MovieCard = ({ extraClass = '', card, cbBtnClick }) => {
+interface MovieCardProps {
+  card: ICard;
+  cbBtnClick: (card: ICard) => void;
+  extraClass?: string;
+}
+
+const MovieCard: FC<MovieCardProps> = ({ extraClass, card, cbBtnClick }) => {
   const location = useLocation();
-  const { user } = useContext(CurrentUser);
+  //TODO context
+  // const { user } = useContext(CurrentUser);
 
   const [isLikeRequest, setIsLikeRequest] = useState(false);
 
@@ -22,35 +30,35 @@ const MovieCard = ({ extraClass = '', card, cbBtnClick }) => {
     setIsLikeRequest(false);
   };
 
-  const convertedDuration = useMemo(() => convertDuration(card.duration), [card.duration]);
+  const convertedDuration = useMemo(
+    () => convertDuration(card.duration),
+    [card.duration]
+  );
 
   return (
-    <article className={`movie-card ${extraClass}`}>
-      <h2 className="movie-card__name">{card.nameRU}</h2>
-      <p className="movie-card__duration">{convertedDuration}</p>
+    <article className={classNames(styles.movieCard, extraClass)}>
+      <h2 className={styles.movieCard__name}>{card.nameRU}</h2>
+      <p className={styles.movieCard__duration}>{convertedDuration}</p>
       <a
-        className="movie-card__trailer-link"
+        className={styles.movieCard__trailerLink}
         href={card.trailerLink}
         target="_blank"
         rel="noreferrer"
         aria-label="Ссылка на трейлер."
       >
         <img
-          className="movie-card__cover"
-          src={
-            typeof card.image === 'string'
-              ? card.image
-              : `${MOVIE_COVER_URL}${card.image.url}`
-          }
+          className={styles.movieCard__cover}
+          src={card.image}
           alt="Постер фильма."
         />
       </a>
 
+      {/* TODO isLiked={card.owner === user._id} */}
       {location.pathname === '/movies' ? (
         <LikeBtn
-          extraClass="movie-card__btn"
+          extraClass={styles.movieCard__btn}
           type="button"
-          isLiked={card.owner === user._id}
+          isLiked={card.owner === '637b9c69c95a83a3030a150f'}
           onClick={handleLikeClick}
           disabled={isLikeRequest}
         >
@@ -58,7 +66,7 @@ const MovieCard = ({ extraClass = '', card, cbBtnClick }) => {
         </LikeBtn>
       ) : (
         <button
-          className="movie-card__del-btn"
+          className={styles.movieCard__delBtn}
           type="button"
           aria-label="Удалить фильм из сохраненных."
           onClick={handleLikeClick}

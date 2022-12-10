@@ -1,22 +1,20 @@
+// for like
 export interface IMovie {
   country: string;
+  description: string;
   director: string;
   duration: number;
-  year: string;
-  description: string;
   image: string;
-  trailerLink: string;
-  thumbnail: string;
-  owner: string;
   movieId: number;
-  nameRU: string;
   nameEN: string;
+  nameRU: string;
+  thumbnail: string;
+  trailerLink: string;
+  year: string;
 }
 
-export interface IMovieForLike extends IMovie {
-  owner: string;
-}
-
-export interface ILikedMovie  extends IMovieForLike {
+// liked cards
+export interface ICard extends IMovie {
+  _id: string;
   owner: string;
 }
