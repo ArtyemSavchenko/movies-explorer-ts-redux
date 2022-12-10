@@ -17,7 +17,7 @@ export interface CustomLinkProps {
   [rest: string]: any;
 }
 
-export const CustomLink: FC<CustomLinkProps> = ({
+const CustomLink: FC<CustomLinkProps> = ({
   feature,
   appearance,
   isLoading,
@@ -79,3 +79,5 @@ export const CustomLink: FC<CustomLinkProps> = ({
       return null;
   }
 };
+
+export default CustomLink;

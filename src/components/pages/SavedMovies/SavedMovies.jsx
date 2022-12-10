@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import MoviesCardList from '../../MoviesCardList/MoviesCardList';
 import SearchMovieForm from '../../SearchMovieForm/SearchMovieForm';
-import Empty from '../../Empty/Empty';
+import Empty from '../../EmptySearch/EmptySearch';
 
 import { usePushNotification } from '../../../components/shared/Notifications/Notifications';
 import { CurrentUser } from '../../../contexts/CurrentUserContext';

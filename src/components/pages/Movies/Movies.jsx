@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import Preloader from '../../ui/Preloader/Preloader';
 import MoviesCardList from '../../MoviesCardList/MoviesCardList';
 import SearchMovieForm from '../../SearchMovieForm/SearchMovieForm';
-import Empty from '../../Empty/Empty';
+import Empty from '../../EmptySearch/EmptySearch';
 
 import {
   filterByDuration,

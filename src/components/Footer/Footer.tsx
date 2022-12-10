@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 
 import CustomLink from '../ui/CustomLink/CustomLink';
 
-import './Footer.css';
+import styles from './Footer.module.css';
 
 const Footer = () => {
   const location = useLocation();
@@ -16,26 +16,26 @@ const Footer = () => {
   }
 
   return (
-    <footer className="footer">
-      <p className="footer__text">
+    <footer className={styles.footer}>
+      <p className={styles.footer__text}>
         Учебный проект Яндекс.Практикум х BeatFilm.
       </p>
-      <div className="footer__link-box">
+      <div className={styles.footer__linkBox}>
         <CustomLink
-          extraClass="footer__link"
+          extraClass={styles.footer__link}
           feature="external-link"
           href="https://practicum.yandex.ru/"
         >
           Яндекс.Практикум
         </CustomLink>
         <CustomLink
-          extraClass="footer__link"
+          extraClass={styles.footer__link}
           feature="external-link"
           href="https://github.com/ArtyemSavchenko"
         >
           Github
         </CustomLink>
-        <p className="footer__year">© 2022</p>
+        <p className={styles.footer__year}>© 2022</p>
       </div>
     </footer>
   );
