@@ -2,21 +2,23 @@ import HeadingUnderlined from '../HeadingUnderlined/HeadingUnderlined';
 import BaseText from '../BaseText/BaseText';
 import Tech from '../Tech/Tech';
 
-import './Techs.css';
+import styles from './Techs.module.css';
 
 const TECHS = ['HTML', 'CSS', 'JS', 'React', 'Git', 'Express.js', 'MongoDB'];
 
 const Techs = () => {
   return (
-    <section className="techs">
-      <HeadingUnderlined extraClass='techs__heading'>Технологии</HeadingUnderlined>
-      <h3 className="techs__subheading">7&nbsp;технологий</h3>
-      <BaseText extraClass="techs__description">
+    <section className={styles.techs}>
+      <HeadingUnderlined extraClass={styles.techs__heading}>
+        Технологии
+      </HeadingUnderlined>
+      <h3 className={styles.techs__subheading}>7&nbsp;технологий</h3>
+      <BaseText extraClass={styles.techs__description}>
         На&nbsp;курсе веб-разработки мы&nbsp;освоили технологии, которые
         применили в&nbsp;дипломном проекте.
       </BaseText>
 
-      <div className="techs__techs-box">
+      <div className={styles.techs__techsBox}>
         {TECHS.map((tech) => (
           <Tech key={tech}>{tech}</Tech>
         ))}

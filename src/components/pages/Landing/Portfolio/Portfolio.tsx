@@ -1,6 +1,6 @@
 import PortfolioLink from '../PortfolioLink/PortfolioLink';
 
-import './Portfolio.css';
+import styles from './Portfolio.module.css';
 
 const LINKS = [
   {
@@ -19,9 +19,9 @@ const LINKS = [
 
 const Portfolio = () => {
   return (
-    <section className="portfolio">
-      <h2 className="portfolio__heading">Портфолио</h2>
-      <ul className="portfolio__list">
+    <section className={styles.portfolio}>
+      <h2 className={styles.portfolio__heading}>Портфолио</h2>
+      <ul className={styles.portfolio__list}>
         {LINKS.map((item) => (
           <li key={item.link}>
             <PortfolioLink href={item.link} target="_blank">

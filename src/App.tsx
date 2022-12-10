@@ -18,6 +18,7 @@ import { ICard } from './types/movie';
 import MoviesCardList from './components/MoviesCardList/MoviesCardList';
 import { getLikedMovies } from './utils/MainApi';
 import SearchMovieForm from './components/SearchMovieForm/SearchMovieForm';
+import Landing from './components/pages/Landing/Landing';
 
 const App: FC = () => {
   const pushNotification = usePushNotification();
@@ -47,14 +48,7 @@ const App: FC = () => {
 
   return (
     <div>
-      <SearchMovieForm
-        isShortMovies={bool}
-        onSubmit={() => console.log('submit')}
-        searchString={string}
-        setIsShortMovies={setBool}
-        setSearchString={setString}
-      />
-      <MoviesCardList cards={cards} cbBtnClick={() => console.log('hit')} />
+      <Landing />
     </div>
   );
 };

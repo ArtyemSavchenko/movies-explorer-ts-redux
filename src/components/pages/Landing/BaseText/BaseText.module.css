@@ -1,4 +1,4 @@
-.base-text {
+.baseText {
   font-weight: 400;
   font-size: 11px;
   line-height: 1.45;
@@ -7,14 +7,14 @@
 }
 
 @media (min-width: 768px) {
-  .base-text {
+  .baseText {
     font-size: 12px;
     line-height: 1.5;
   }
 }
 
 @media (min-width: 1280px) {
-  .base-text {
+  .baseText {
     font-size: 14px;
     line-height: 1.43;
   }

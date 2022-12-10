@@ -23,7 +23,7 @@
   margin-bottom: 50px;
 }
 
-.techs__techs-box {
+.techs__techsBox {
   display: grid;
   grid-template-columns: repeat(auto-fit, 84px);
   place-content: center;
@@ -35,7 +35,7 @@
   .techs {
     padding: 90px 50px;
   }
-  .techs__techs-box {
+  .techs__techsBox {
     padding: 0;
   }
 }
@@ -45,7 +45,7 @@
     padding: 100px 70px;
   }
 
-  .techs__techs-box {
+  .techs__techsBox {
     grid-template-columns: repeat(auto-fit, 90px);
   }
 }

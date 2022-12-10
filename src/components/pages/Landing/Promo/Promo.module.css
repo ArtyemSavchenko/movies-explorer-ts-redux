@@ -39,11 +39,11 @@
   max-width: 260px;
 }
 
-.promo__no-wrap {
+.promo__noWrap {
   white-space: nowrap;
 }
 
-.promo__btn-more {
+.promo__btnMore {
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33;
@@ -59,14 +59,14 @@
 }
 
 @media (any-hover: hover) {
-  .promo__btn-more:hover {
+  .promo__btnMore:hover {
     background-color: #fff;
     color: var(--dark-bg-color);
     transition-duration: var(--in-duration);
   }
 }
 
-.promo__btn-more:active {
+.promo__btnMore:active {
   transform: scale(0.96);
   -webkit-tap-highlight-color: transparent;
   transition-duration: 0.15s;
@@ -94,7 +94,7 @@
     margin-bottom: 92px;
   }
 
-  .promo__btn-more {
+  .promo__btnMore {
     margin-bottom: 46px;
   }
 }
@@ -131,7 +131,7 @@
     margin-bottom: 146px;
   }
 
-  .promo__btn-more {
+  .promo__btnMore {
     margin-bottom: 0;
   }
 }
