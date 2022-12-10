@@ -28,10 +28,8 @@ const CustomLink: FC<CustomLinkProps> = ({
 }) => {
   const className = classNames(
     styles.customLink,
-    {
-      [styles.customLink_type_accent]: appearance === 'accent',
-      [styles.customLink_type_attention]: appearance === 'attention',
-    },
+    appearance === 'accent' && styles.customLink_type_accent,
+    appearance === 'attention' && styles.customLink_type_attention,
     extraClass
   );
 
@@ -44,8 +42,8 @@ const CustomLink: FC<CustomLinkProps> = ({
           {...restProps}
         >
           {isLoading ? (
-            <div className="custom-link__spinner">
-              <div className="custom-link__spinner-el"></div>
+            <div className={styles.customLink__spinner}>
+              <div className={styles.customLink__spinnerEl}></div>
             </div>
           ) : (
             children

@@ -11,12 +11,19 @@ interface LikeBtnProps extends UIButton {
   children?: ReactNode;
 }
 
-const LikeBtn: FC<LikeBtnProps> = ({ extraClass, children, isLiked, ...restProps }) => {
+const LikeBtn: FC<LikeBtnProps> = ({
+  extraClass,
+  children,
+  isLiked,
+  ...restProps
+}) => {
   return (
     <button
-      className={classNames(styles.likeBtn, extraClass, {
-        [styles.likeBtn_isLiked]: Boolean(isLiked),
-      })}
+      className={classNames(
+        styles.likeBtn,
+        isLiked && styles.likeBtn_isLiked,
+        extraClass
+      )}
       {...restProps}
     >
       {children}

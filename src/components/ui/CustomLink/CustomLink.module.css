@@ -47,10 +47,12 @@
 
 .customLink__spinner {
   display: flex;
+  justify-content: center;
+  align-items: center;
   column-gap: 10px;
 }
 
-.customLink__spinner-el {
+.customLink__spinnerEl {
   width: var(--spinner-el-size);
   height: var(--spinner-el-size);
   background-color: var(--ui-accent-color);

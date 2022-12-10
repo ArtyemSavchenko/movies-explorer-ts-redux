@@ -13,9 +13,7 @@ interface LogoLinkProps {
 
 const LogoLink: FC<LogoLinkProps> = ({ extraClass, funny }) => {
   const setLogoClass = ({ isActive }: { isActive?: boolean }) =>
-    classNames(extraClass, {
-      [styles.logoLink_currentPage]: Boolean(isActive),
-    });
+    classNames(extraClass, isActive && styles.logoLink_currentPage);
 
   return (
     <NavLink

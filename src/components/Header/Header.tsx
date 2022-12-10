@@ -11,6 +11,7 @@ import { CurrentUser } from '../../contexts/CurrentUserContext';
 import styles from './Header.module.css';
 
 const Header = () => {
+  //TODO вернуть юз контекст
   // const { user } = useContext(CurrentUser);
   const location = useLocation();
 
@@ -20,11 +21,13 @@ const Header = () => {
 
   return (
     <header
-      className={classNames(styles.header, {
-        [styles.header_landing]: location.pathname === '/',
-      })}
+      className={classNames(
+        styles.header,
+        location.pathname === '/' && styles.header_landing
+      )}
     >
       <LogoLink funny />
+      {/*TODO заменить тру на юзера*/}
       {true ? <NavBar /> : <SignMenu />}
     </header>
   );

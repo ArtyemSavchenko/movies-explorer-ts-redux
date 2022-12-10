@@ -22,9 +22,10 @@ const FormInput: FC<FormInputProps> = ({
   return (
     <div className={classNames(styles.inputField, extraClass)}>
       <input
-        className={classNames(styles.inputField__input, {
-          [styles.inputField__input_error]: Boolean(error),
-        })}
+        className={classNames(
+          styles.inputField__input,
+          error && styles.inputField__input_error
+        )}
         {...restProps}
         placeholder=" "
         id={id}

@@ -7,20 +7,16 @@ import BtnClose from '../../ui/BtnClose/BtnClose';
 
 import styles from './NavBar.module.css';
 
-type IActiveNavClassSetter = ({isActive}: { isActive: boolean }) => string;
+type IActiveNavClassSetter = ({ isActive }: { isActive: boolean }) => string;
 
 const NavBar = () => {
   const [isOpened, setIsOpened] = useState(false);
 
   const setLinkClass: IActiveNavClassSetter = ({ isActive }) =>
-    classNames(styles.navBar__link, {
-      [styles.navBar__link_active]: isActive,
-    });
+    classNames(styles.navBar__link, isActive && styles.navBar__link_active);
 
   const setBtnClass: IActiveNavClassSetter = ({ isActive }) =>
-    classNames(styles.navBar__btn, {
-      [styles.navBar__btn_active]: isActive,
-    });
+    classNames(styles.navBar__btn, isActive && styles.navBar__btn_active);
 
   const closeMenu = () => {
     setIsOpened(false);
@@ -55,15 +51,17 @@ const NavBar = () => {
       />
 
       <div
-        className={classNames(styles.navBar__menuWrapper, {
-          [styles.navBar__menuWrapper_opened]: isOpened,
-        })}
+        className={classNames(
+          styles.navBar__menuWrapper,
+          isOpened && styles.navBar__menuWrapper_opened
+        )}
         onPointerDown={handleOverlayClick}
       >
         <div
-          className={classNames(styles.navBar__menuBox, {
-            [styles.navBar__menuBox_opened]: isOpened,
-          })}
+          className={classNames(
+            styles.navBar__menuBox,
+            isOpened && styles.navBar__menuBox_opened
+          )}
         >
           <BtnClose
             type="button"
