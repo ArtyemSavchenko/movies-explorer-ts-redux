@@ -21,6 +21,10 @@
   margin-bottom: 5px;
 }
 
+.inputField__input:focus-visible {
+  outline: none;
+}
+
 .inputField__input_error {
   color: var(--attention-color);
 }
