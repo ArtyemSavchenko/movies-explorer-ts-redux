@@ -1,55 +1,107 @@
-import { ChangeEventHandler, FC, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
-import { usePushNotification } from './components/shared/Notifications/NotificationsProvider';
-import { NOTIFICATION_TYPE } from './components/shared/Notifications/types/notification';
-import './App.css';
-
-import FormInput from './components/ui/FormInput/FormInput';
-import LikeBtn from './components/ui/LikeBtn/LikeBtn';
-import Logo from './components/ui/Logo/Logo';
-import LogoLink from './components/ui/LogoLink/LogoLink';
-import ModernCheckbox from './components/ui/ModernCheckbox/ModernCheckbox';
+import Main from './components/Main/Main';
 import Preloader from './components/ui/Preloader/Preloader';
-import ProfileInput from './components/ui/ProfileInput/ProfileInput';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
-import CustomLink from './components/ui/CustomLink/CustomLink';
+
+import { usePushNotification } from './components/shared/Notifications/NotificationsProvider';
+import { CurrentUser } from './contexts/CurrentUserContext';
+import { ICurrentUser } from './types/user';
 import { ICard } from './types/movie';
-import MoviesCardList from './components/MoviesCardList/MoviesCardList';
-import { getLikedMovies } from './utils/MainApi';
-import SearchMovieForm from './components/SearchMovieForm/SearchMovieForm';
-import Landing from './components/pages/Landing/Landing';
 
-const App: FC = () => {
+import { getLikedMovies, getUser } from './utils/MainApi';
+
+import styles from './App.module.css';
+
+type ISignIn = (user: ICurrentUser, callback?: () => void) => void;
+type ISignOut = (callback?: () => void) => void;
+
+const App = () => {
+  const [isCheckingToken, setIsCheckingToken] = useState(true);
   const pushNotification = usePushNotification();
-  const [isChecked, setIsChecked] = useState(false);
 
-  const addNotification = () => {
-    pushNotification(
-      {
-        type: NOTIFICATION_TYPE.success,
-        heading: 'hello',
-      },
-      1000
-    );
+  const [user, setUser] = useState<ICurrentUser | null>(null);
+  const [likedCards, setLikedCards] = useState<ICard[]>([]);
+
+  const signIn: ISignIn = async (user, callback) => {
+    setUser(user);
+
+    if (callback) {
+      callback();
+    }
   };
 
-  const [cards, setCards] = useState<ICard[]>([]);
+  const signOut: ISignOut = (callback) => {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('last-result');
+    setUser(null);
+    setLikedCards([]);
+
+    if (callback) {
+      callback();
+    }
+  };
+
+  const providerValue = { user, signIn, signOut, likedCards, setLikedCards };
+
   useEffect(() => {
-    const fn = async () => {
-      const cards = await getLikedMovies();
-      setCards(cards);
+    const checkToken = async () => {
+      const token = localStorage.getItem('jwt');
+      if (!token) {
+        localStorage.removeItem('last-result');
+        setIsCheckingToken(false);
+        return;
+      }
+
+      try {
+        const user = await getUser();
+        signIn(user);
+      } catch (err: any) {
+        pushNotification({
+          type: 'error',
+          heading: 'Не удалось авторизоваться',
+          text: 'Токен недействителен',
+        });
+
+        localStorage.removeItem('last-result');
+        localStorage.removeItem('jwt');
+
+        setIsCheckingToken(false);
+        return;
+      }
+
+      try {
+        const likedMovies = await getLikedMovies();
+        setLikedCards(likedMovies);
+      } catch (err: any) {
+        pushNotification({
+          type: 'error',
+          text: err.message,
+        });
+      } finally {
+        setIsCheckingToken(false);
+      }
     };
-    fn();
+
+    checkToken();
   }, []);
 
-  const [string, setString] = useState('');
-  const [bool, setBool] = useState(false);
-
-  return (
-    <div>
-      <Landing />
-    </div>
+  return isCheckingToken ? (
+    <Preloader />
+  ) : (
+    <Suspense fallback={<Preloader />}>
+      <CurrentUser.Provider value={providerValue}>
+        <div className={styles.app}>
+          <Header />
+          <Main>
+            <Outlet />
+          </Main>
+          <Footer />
+        </div>
+      </CurrentUser.Provider>
+    </Suspense>
   );
 };
 

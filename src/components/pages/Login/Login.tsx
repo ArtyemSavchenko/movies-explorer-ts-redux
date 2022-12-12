@@ -8,12 +8,12 @@ import CustomLink from '../../ui/CustomLink/CustomLink';
 
 import { CurrentUser } from '../../../contexts/CurrentUserContext';
 
-import { usePushNotification } from '../../shared/Notifications/Notifications';
+import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 import { authorize, getLikedMovies, getUser } from '../../../utils/MainApi';
 
 import { useValidationInput } from '../../../hook/useValidationInput';
 
-import './Login.css';
+import styles from './Login.module.css';
 
 const Login = () => {
   const [email, emailErr, emailIsValid, onChangeEmail] = useValidationInput(
@@ -43,7 +43,7 @@ const Login = () => {
   const navigate = useNavigate();
   const pushNotification = usePushNotification();
 
-  const handleLogin = async (e) => {
+  const handleLogin: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     setIsSubmitting(true);
@@ -58,7 +58,7 @@ const Login = () => {
 
       const likedMovies = await getLikedMovies();
       setLikedCards(likedMovies);
-    } catch (err) {
+    } catch (err: any) {
       pushNotification({
         type: 'error',
         text: err.message,
@@ -69,13 +69,13 @@ const Login = () => {
   };
 
   return (
-    <section className="login">
-      <LogoLink extraClass="login__logo-link" funny />
-      <p className="login__title">Рады видеть!</p>
-      <form className="login__form" onSubmit={handleLogin}>
-        <fieldset className="login__fieldset" disabled={isSubmitting}>
+    <section className={styles.login}>
+      <LogoLink extraClass={styles.login__logoLink} funny />
+      <p className={styles.login__title}>Рады видеть!</p>
+      <form className={styles.login__form} onSubmit={handleLogin}>
+        <fieldset className={styles.login__fieldset} disabled={isSubmitting}>
           <FormInput
-            extraClass="login__input"
+            extraClass={styles.login__input}
             type="email"
             placeholder="E-mail"
             autoComplete="email"
@@ -85,7 +85,7 @@ const Login = () => {
             required
           />
           <FormInput
-            extraClass="login__input"
+            extraClass={styles.login__input}
             type="password"
             placeholder="Пароль"
             autoComplete="password"
@@ -96,18 +96,18 @@ const Login = () => {
           />
         </fieldset>
         <FormBtn
-          extraClass="login__submit-btn"
+          extraClass={styles.login__submitBtn}
           disabled={!isValidForm}
           isLoading={isSubmitting}
         >
           Войти
         </FormBtn>
-        <p className="login__caption">
+        <p className={styles.login__caption}>
           Ещё не зарегистрированы?{' '}
           <CustomLink
             feature="internal-link"
             appearance="accent"
-            extraClass="login__caption-link"
+            extraClass={styles.login__captionLink}
             to="/signup"
           >
             Регистрация

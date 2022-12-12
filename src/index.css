@@ -1,5 +1,4 @@
 @import 'normalize';
-@import './vendor/simplify.css';
 
 @import url('./vendor/fonts/fonts.css');
 
@@ -26,12 +25,10 @@
   background-color: var(--dark-bg-color);
 
   min-height: 100vh;
-
-  padding: 20px;
-
 }
 
 body {
+  margin: 0;
   font-family: var(--main-font);
 }
 

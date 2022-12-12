@@ -10,7 +10,7 @@
   margin: 0 auto;
 }
 
-.login__logo-link {
+.login__logoLink {
   margin-bottom: 50px;
 }
 
@@ -51,13 +51,13 @@
   align-self: center;
 }
 
-.login__caption-link {
+.login__captionLink {
   font-size: inherit;
   line-height: inherit;
   font-weight: inherit;
 }
 
-.login__submit-btn {
+.login__submitBtn {
   font-weight: 500;
   font-size: 12px;
   line-height: 1.25;
@@ -74,7 +74,7 @@
     padding: 0 30px;
   }
 
-  .login__logo-link {
+  .login__logoLink {
     margin-bottom: 40px;
   }
 
@@ -82,7 +82,7 @@
     margin-bottom: 40px;
   }
 
-  .login__submit-btn {
+  .login__submitBtn {
     font-size: 14px;
     line-height: 1.21;
     margin-bottom: 16px;

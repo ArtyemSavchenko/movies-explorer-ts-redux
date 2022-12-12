@@ -11,8 +11,7 @@ import { CurrentUser } from '../../contexts/CurrentUserContext';
 import styles from './Header.module.css';
 
 const Header = () => {
-  //TODO вернуть юз контекст
-  // const { user } = useContext(CurrentUser);
+  const { user } = useContext(CurrentUser);
   const location = useLocation();
 
   if (location.pathname === '/signin' || location.pathname === '/signup') {
@@ -27,8 +26,7 @@ const Header = () => {
       )}
     >
       <LogoLink funny />
-      {/*TODO заменить тру на юзера*/}
-      {true ? <NavBar /> : <SignMenu />}
+      {user ? <NavBar /> : <SignMenu />}
     </header>
   );
 };

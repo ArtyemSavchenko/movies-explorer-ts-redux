@@ -19,8 +19,7 @@ interface MovieCardProps {
 
 const MovieCard: FC<MovieCardProps> = ({ extraClass, card, cbBtnClick }) => {
   const location = useLocation();
-  //TODO context
-  // const { user } = useContext(CurrentUser);
+  const { user } = useContext(CurrentUser);
 
   const [isLikeRequest, setIsLikeRequest] = useState(false);
 
@@ -53,12 +52,11 @@ const MovieCard: FC<MovieCardProps> = ({ extraClass, card, cbBtnClick }) => {
         />
       </a>
 
-      {/* TODO isLiked={card.owner === user._id} */}
       {location.pathname === '/movies' ? (
         <LikeBtn
           extraClass={styles.movieCard__btn}
           type="button"
-          isLiked={card.owner === '637b9c69c95a83a3030a150f'}
+          isLiked={card.owner === user._id}
           onClick={handleLikeClick}
           disabled={isLikeRequest}
         >

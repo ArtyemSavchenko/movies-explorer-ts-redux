@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 
-import { INotificationElement, NOTIFICATION_TYPE } from './types/notification';
+import { INotificationElement } from './types/notification';
 
 import styles from './Notification.module.css';
 
@@ -37,11 +37,11 @@ const Notification: FC<NotificationProps> = ({
   return (
     <div
       className={`${styles.notification} ${
-        type === NOTIFICATION_TYPE.success
+        type === 'success'
           ? styles.notification_type_success
           : ''
       }${
-        type === NOTIFICATION_TYPE.error ? styles.notification_type_error : ''
+        type === 'error' ? styles.notification_type_error : ''
       } ${state === 'open' ? styles.notification_state_open : ''}${
         state === 'close' ? styles.notification_state_close : ''
       }
