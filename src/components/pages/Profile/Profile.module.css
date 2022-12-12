@@ -44,7 +44,7 @@
   margin: 0 auto;
 }
 
-.profile__err-text {
+.profile__errText {
   margin: 0 auto;
   padding-top: 5px;
 
@@ -57,11 +57,11 @@
   visibility: hidden;
 }
 
-.profile__err-text_visible {
+.profile__errText_visible {
   visibility: visible;
 }
 
-.profile__submit-btn {
+.profile__submitBtn {
   font-weight: 400;
   font-size: 12px;
   line-height: 1.25;
@@ -70,7 +70,7 @@
   align-self: center;
 }
 
-.profile__sign-out-btn {
+.profile__signOutBtn {
   font-weight: 500;
   font-size: 12px;
   line-height: 1.25;
@@ -95,8 +95,8 @@
     margin-bottom: 80px;
   }
 
-  .profile__submit-btn,
-  .profile__sign-out-btn {
+  .profile__submitBtn,
+  .profile__signOutBtn {
     font-size: 13px;
     line-height: 1.23;
   }

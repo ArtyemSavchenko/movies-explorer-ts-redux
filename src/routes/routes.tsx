@@ -6,9 +6,9 @@ import ProtectedAuthRoute from '../components/ProtectedAuthRoute/ProtectedAuthRo
 import ProtectedNotAuthRoute from '../components/ProtectedNotAuthRoute/ProtectedNotAuthRoute';
 
 const Landing = lazy(() => import('../components/pages/Landing/Landing'));
-// const NotFound = lazy(() => import('../components/pages/NotFound/NotFound'));
+const NotFound = lazy(() => import('../components/pages/NotFound/NotFound'));
 // const Register = lazy(() => import('../components/pages/Register/Register'));
-// const Profile = lazy(() => import('../components/pages/Profile/Profile'));
+const Profile = lazy(() => import('../components/pages/Profile/Profile'));
 const Login = lazy(() => import('../components/pages/Login/Login'));
 // const Movies = lazy(() => import('../components/pages/Movies/Movies'));
 // const SavedMovies = lazy(() =>
@@ -32,10 +32,10 @@ export const router = createBrowserRouter([
       //   path: 'saved-movies',
       //   element: <ProtectedAuthRoute Component={SavedMovies} />,
       // },
-      // {
-      //   path: 'profile',
-      //   element: <ProtectedAuthRoute Component={Profile} />,
-      // },
+      {
+        path: 'profile',
+        element: <ProtectedAuthRoute Component={Profile} />,
+      },
       // {
       //   path: 'signup',
       //   element: <ProtectedNotAuthRoute Component={Register} />,
@@ -45,5 +45,9 @@ export const router = createBrowserRouter([
         element: <ProtectedNotAuthRoute Component={Login} />,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);

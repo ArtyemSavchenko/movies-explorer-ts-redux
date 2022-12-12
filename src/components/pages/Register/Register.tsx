@@ -6,13 +6,13 @@ import FormInput from '../../ui/FormInput/FormInput';
 import FormBtn from '../../ui/FormBtn/FormBtn';
 import CustomLink from '../../ui/CustomLink/CustomLink';
 
-import { usePushNotification } from '../../shared/Notifications/Notifications';
+import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 import { useValidationInput } from '../../../hook/useValidationInput';
 import { authorize, register } from '../../../utils/MainApi';
 
 import { CurrentUser } from '../../../contexts/CurrentUserContext';
 
-import './Register.css';
+import styles from './Register.module.css';
 
 const Register = () => {
   const [name, nameErr, nameIsValid, onChangeName] = useValidationInput('', {
@@ -26,7 +26,7 @@ const Register = () => {
     {
       required: true,
       isEmail: true,
-    }
+    },
   );
   const [password, passwordErr, passwordIsValid, onChangePassword] =
     useValidationInput('', {
@@ -49,7 +49,7 @@ const Register = () => {
   const navigate = useNavigate();
   const pushNotification = usePushNotification();
 
-  const handleRegister = async (e) => {
+  const handleRegister: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     setIsSubmitting(true);
@@ -64,7 +64,7 @@ const Register = () => {
           navigate('/movies');
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       pushNotification({
         type: 'error',
         text: err.message,
@@ -75,13 +75,17 @@ const Register = () => {
   };
 
   return (
-    <section className="register">
-      <LogoLink extraClass="register__logo-link" funny />
-      <p className="register__title">Добро пожаловать!</p>
-      <form className="register__form" onSubmit={handleRegister} noValidate>
-        <fieldset className="register__fieldset" disabled={isSubmitting}>
+    <section className={styles.register}>
+      <LogoLink extraClass={styles.register__logoLink} funny />
+      <p className={styles.register__title}>Добро пожаловать!</p>
+      <form
+        className={styles.register__form}
+        onSubmit={handleRegister}
+        noValidate
+      >
+        <fieldset className={styles.register__fieldset} disabled={isSubmitting}>
           <FormInput
-            extraClass="register__input"
+            extraClass={styles.register__input}
             type="text"
             placeholder="Имя"
             autoComplete="name"
@@ -89,11 +93,11 @@ const Register = () => {
             onChange={onChangeName}
             error={nameErr}
             required
-            minLength="2"
-            maxLength="30"
+            minLength={2}
+            maxLength={30}
           />
           <FormInput
-            extraClass="register__input"
+            extraClass={styles.register__input}
             type="email"
             placeholder="E-mail"
             autoComplete="email"
@@ -103,7 +107,7 @@ const Register = () => {
             required
           />
           <FormInput
-            extraClass="register__input"
+            extraClass={styles.register__input}
             type="password"
             placeholder="Пароль"
             autoComplete="new-password"
@@ -114,18 +118,18 @@ const Register = () => {
           />
         </fieldset>
         <FormBtn
-          extraClass="register__submit-btn"
+          extraClass={styles.register__submitBtn}
           isLoading={isSubmitting}
           disabled={!isValidForm}
         >
           Зарегистрироваться
         </FormBtn>
-        <p className="register__caption">
+        <p className={styles.register__caption}>
           Уже зарегистрированы?{' '}
           <CustomLink
             feature="internal-link"
             appearance="accent"
-            extraClass="register__caption-link"
+            extraClass={styles.register__captionLink}
             to="/signin"
           >
             Войти

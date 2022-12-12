@@ -10,7 +10,7 @@
   margin: 0 auto;
 }
 
-.register__logo-link {
+.register__logoLink {
   margin-bottom: 50px;
 }
 
@@ -51,13 +51,13 @@
   align-self: center;
 }
 
-.register__caption-link {
+.register__captionLink {
   font-size: inherit;
   line-height: inherit;
   font-weight: inherit;
 }
 
-.register__submit-btn {
+.register__submitBtn {
   font-weight: 500;
   font-size: 12px;
   line-height: 1.25;
@@ -74,7 +74,7 @@
     padding: 0 30px;
   }
 
-  .register__logo-link {
+  .register__logoLink {
     margin-bottom: 40px;
   }
 
@@ -82,7 +82,7 @@
     margin-bottom: 40px;
   }
 
-  .register__submit-btn {
+  .register__submitBtn {
     font-size: 14px;
     line-height: 1.21;
     margin-bottom: 16px;

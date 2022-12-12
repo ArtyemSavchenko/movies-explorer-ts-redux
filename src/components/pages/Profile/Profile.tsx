@@ -7,11 +7,12 @@ import ProfileInput from '../../ui/ProfileInput/ProfileInput';
 import { CurrentUser } from '../../../contexts/CurrentUserContext';
 
 import { useValidationInput } from '../../../hook/useValidationInput';
-import { usePushNotification } from '../../shared/Notifications/Notifications';
+import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 
 import { patchUser } from '../../../utils/MainApi';
 
-import './Profile.css';
+import styles from './Profile.module.css';
+import classNames from 'classnames';
 
 const Profile = () => {
   const { user, signIn, signOut } = useContext(CurrentUser);
@@ -58,7 +59,9 @@ const Profile = () => {
   const navigate = useNavigate();
   const pushNotification = usePushNotification();
 
-  const handleEditProfile = async (e) => {
+  const handleEditProfile: React.PointerEventHandler<
+    HTMLButtonElement
+  > = async (e) => {
     e.preventDefault();
 
     setIsSubmitting(true);
@@ -75,7 +78,7 @@ const Profile = () => {
           text: 'Данные успешно обновлены',
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       pushNotification({
         type: 'error',
         text: err.message,
@@ -90,25 +93,28 @@ const Profile = () => {
   };
 
   return (
-    <section className="profile">
-      <div className="profile__content">
-        <p className="profile__heading">Привет, {user.name}!</p>
+    <section className={styles.profile}>
+      <div className={styles.profile__content}>
+        <p className={styles.profile__heading}>Привет, {user.name}!</p>
 
-        <form className="profile__form">
-          <fieldset className="profile__fieldset" disabled={isSubmitting}>
+        <form className={styles.profile__form}>
+          <fieldset
+            className={styles.profile__fieldset}
+            disabled={isSubmitting}
+          >
             <ProfileInput
-              extraClass="profile__input"
+              extraClass={styles.profile__input}
               label="Имя"
               type="text"
               value={name}
               onChange={onChangeName}
               required
-              minLength="2"
-              maxLength="30"
+              minLength={2}
+              maxLength={30}
               error={nameErr}
             />
             <ProfileInput
-              extraClass="profile__input"
+              extraClass={styles.profile__input}
               label="E-mail"
               type="email"
               value={email}
@@ -118,18 +124,19 @@ const Profile = () => {
             />
 
             <p
-              className={`profile__err-text${
-                !isDataChanged && !isFirstEditing
-                  ? ' profile__err-text_visible'
-                  : ''
-              }`}
+              className={classNames(
+                styles.profile__errText,
+                !isDataChanged &&
+                  !isFirstEditing &&
+                  styles.profile__errText_visible
+              )}
             >
               Новые данные совпадают со старыми
             </p>
           </fieldset>
 
           <CustomLink
-            extraClass="profile__submit-btn"
+            extraClass={styles.profile__submitBtn}
             feature="button"
             type="submit"
             disabled={!isValidForm}
@@ -141,7 +148,7 @@ const Profile = () => {
         </form>
 
         <CustomLink
-          extraClass="profile__sign-out-btn"
+          extraClass={styles.profile__signOutBtn}
           feature="button"
           appearance="attention"
           type="button"

@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, useState } from 'react';
+import { ChangeEvent, ChangeEventHandler, useCallback, useState } from 'react';
 
 import { EMAIL_REG_EXP, NAME_REG_EXP } from '../utils/constants';
 
@@ -92,7 +92,7 @@ export const useValidationInput: IValidationHook = (
   const [err, setErr] = useState('');
   const [isValid, setIsValid] = useState(!checkValidationErr(value, params));
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setErr('');
 
     const inputValue = e.target.value;
@@ -102,7 +102,7 @@ export const useValidationInput: IValidationHook = (
 
     setIsValid(!err);
     setErr(err);
-  };
+  }, [params, errors]);
 
   return [value, err, isValid, onChange];
 };
