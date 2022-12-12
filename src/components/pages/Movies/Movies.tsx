@@ -10,20 +10,22 @@ import {
   filterBySearchString,
   getNewPage,
 } from '../../../utils/searchUtils';
-import { usePushNotification } from '../../shared/Notifications/Notifications';
-import { MOVIE_COVER_URL } from '../../../utils/constants';
+import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
+import { IMovie } from '../../../types/movie';
 
 import { getMovies } from '../../../utils/MoviesApi';
 import { dislikeMovie, likeMovie } from '../../../utils/MainApi';
 
 import { CurrentUser } from '../../../contexts/CurrentUserContext';
 
-import './Movies.css';
+import styles from './Movies.module.css';
+import classNames from 'classnames';
+import { IUserProvider } from '../../../types/userProvider';
 
 const Movies = () => {
-  const [cards, setCards] = useState([]);
-  const [foundMovies, setFoundMovies] = useState(null);
-  const [filteredMovies, setFilteredMovies] = useState(null);
+  const [cards, setCards] = useState<IMovie[]>([]);
+  const [foundMovies, setFoundMovies] = useState<IMovie[] | null>(null);
+  const [filteredMovies, setFilteredMovies] = useState<IMovie[]>([]);
 
   const [isMoreResultBtnVisible, setIsMoreResultBtnVisible] = useState(false);
 
@@ -33,11 +35,12 @@ const Movies = () => {
   const [isEmptySearch, setIsEmptySearch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { likedCards, setLikedCards, user } = useContext(CurrentUser);
+  const { likedCards, setLikedCards, user } =
+    useContext<IUserProvider>(CurrentUser);
 
   const pushNotification = usePushNotification();
 
-  const injectLikes = (cards) => {
+  const injectLikes = (cards: IMovie[]): IMovie[] => {
     return cards.map(
       (card) =>
         likedCards.find((likedMovie) => card.movieId === likedMovie.movieId) ||
@@ -46,7 +49,7 @@ const Movies = () => {
   };
 
   const renderStartCards = () => {
-    if (filteredMovies.length === 0) {
+    if (filteredMovies?.length === 0) {
       setCards([]);
       setIsEmptySearch(true);
       setIsMoreResultBtnVisible(false);
@@ -89,32 +92,35 @@ const Movies = () => {
     if (!filteredMovies) {
       return;
     }
-    renderStartCards(filteredMovies);
+    renderStartCards();
   }, [filteredMovies]);
 
-  const likeCard = async (card) => {
+  const likeCard = async (card: IMovie) => {
     try {
       const movie = await likeMovie(card);
       setLikedCards([movie, ...likedCards]);
 
       setCards(
         cards.map((card) => {
-          if (movie.movieId === card.movieId) {
+          if (user && movie.movieId === card.movieId) {
             card.owner = user._id;
             card._id = movie._id;
           }
           return card;
         })
       );
-    } catch (err) {
+    } catch (err: any) {
       pushNotification({
         type: 'error',
         text: err.message,
       });
     }
   };
-  const dislikeCard = async (card) => {
+  const dislikeCard = async (card: IMovie) => {
     try {
+      if (!card._id) {
+        return console.error('Не передан card id');
+      }
       await dislikeMovie(card._id);
 
       setLikedCards(
@@ -129,42 +135,29 @@ const Movies = () => {
           return oldCard;
         })
       );
-    } catch (err) {
+    } catch (err: any) {
       pushNotification({
         type: 'error',
         text: err.message,
       });
     }
   };
-  const handleLikeOrDislikeCard = async (card) => {
-    card.owner !== user._id ? await likeCard(card) : await dislikeCard(card);
+  const handleLikeOrDislikeCard = async (card: IMovie) => {
+    user && card.owner !== user._id
+      ? await likeCard(card)
+      : await dislikeCard(card);
   };
 
   const handleSearch = async () => {
     setIsLoading(true);
     setIsEmptySearch(false);
     setFoundMovies(null);
-    setFilteredMovies(null);
+    setFilteredMovies([]);
     setCards([]);
     setIsMoreResultBtnVisible(false);
 
     try {
-      const movies = await getMovies();
-      const formattedMovies = movies.map((movie) => {
-        return {
-          country: movie.country,
-          director: movie.director,
-          duration: movie.duration,
-          year: movie.year,
-          description: movie.description,
-          image: `${MOVIE_COVER_URL}${movie.image.url}`,
-          trailerLink: movie.trailerLink,
-          thumbnail: `${MOVIE_COVER_URL}${movie.image.formats.thumbnail.url}`,
-          movieId: movie.id,
-          nameRU: movie.nameRU,
-          nameEN: movie.nameEN,
-        };
-      });
+      const formattedMovies = await getMovies();
 
       setFoundMovies(filterBySearchString(formattedMovies, searchString));
     } catch (err) {
@@ -192,9 +185,9 @@ const Movies = () => {
   }, []);
 
   return (
-    <section className="movies">
+    <section className={styles.movies}>
       <SearchMovieForm
-        extraClass="movies__search-form"
+        extraClass={styles.movies__searchForm}
         onSubmit={handleSearch}
         searchString={searchString}
         setSearchString={setSearchString}
@@ -210,9 +203,10 @@ const Movies = () => {
         <Empty heading="╮（╯＿╰）╭" text="Ничего не нашлось" />
       ) : null}
       <button
-        className={`movies__more-btn${
-          isMoreResultBtnVisible ? ' movies__more-btn_visible' : ''
-        }`}
+        className={classNames(
+          styles.movies__moreBtn,
+          isMoreResultBtnVisible && styles.movies__moreBtn_visible
+        )}
         type="button"
         onClick={addCardsPage}
       >

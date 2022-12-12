@@ -18,11 +18,7 @@ export const filterBySearchString = (movies: IMovie[], searchString: string) => 
   });
 };
 
-export const filterByDuration = (movies: IMovie[], isShortMovies: string) => {
-  if (isShortMovies === null || isShortMovies === undefined) {
-    return movies;
-  }
-
+export const filterByDuration = (movies: IMovie[], isShortMovies: boolean) => {
   return movies.filter((movie) => {
     if (
       !(isShortMovies && movie.duration <= SHORT_MOVIE_DURATION) &&

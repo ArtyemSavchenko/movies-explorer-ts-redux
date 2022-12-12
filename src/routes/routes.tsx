@@ -10,10 +10,10 @@ const NotFound = lazy(() => import('../components/pages/NotFound/NotFound'));
 // const Register = lazy(() => import('../components/pages/Register/Register'));
 const Profile = lazy(() => import('../components/pages/Profile/Profile'));
 const Login = lazy(() => import('../components/pages/Login/Login'));
-// const Movies = lazy(() => import('../components/pages/Movies/Movies'));
-// const SavedMovies = lazy(() =>
-//   import('../components/pages/SavedMovies/SavedMovies')
-// );
+const Movies = lazy(() => import('../components/pages/Movies/Movies'));
+const SavedMovies = lazy(
+  () => import('../components/pages/SavedMovies/SavedMovies')
+);
 
 export const router = createBrowserRouter([
   {
@@ -24,14 +24,14 @@ export const router = createBrowserRouter([
         index: true,
         element: <Landing />,
       },
-      // {
-      //   path: 'movies',
-      //   element: <ProtectedAuthRoute Component={Movies} />,
-      // },
-      // {
-      //   path: 'saved-movies',
-      //   element: <ProtectedAuthRoute Component={SavedMovies} />,
-      // },
+      {
+        path: 'movies',
+        element: <ProtectedAuthRoute Component={Movies} />,
+      },
+      {
+        path: 'saved-movies',
+        element: <ProtectedAuthRoute Component={SavedMovies} />,
+      },
       {
         path: 'profile',
         element: <ProtectedAuthRoute Component={Profile} />,

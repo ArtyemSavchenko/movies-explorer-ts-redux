@@ -11,10 +11,24 @@ export interface IMovie {
   thumbnail: string;
   trailerLink: string;
   year: string;
+  owner?: string;
+  _id?: string;
 }
 
-// liked cards
-export interface ICard extends IMovie {
-  _id: string;
-  owner: string;
+export interface IBeatMovie {
+  country: string;
+  director: string;
+  duration: number;
+  year: string;
+  description: string;
+  image: {
+    url: string;
+    formats: {
+      thumbnail: { url: string };
+    };
+  };
+  trailerLink: string;
+  id: number;
+  nameRU: string;
+  nameEN: string;
 }

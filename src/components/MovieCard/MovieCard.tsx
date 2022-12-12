@@ -5,15 +5,15 @@ import classNames from 'classnames';
 import LikeBtn from '../ui/LikeBtn/LikeBtn';
 
 import { CurrentUser } from '../../contexts/CurrentUserContext';
-import { ICard } from '../../types/movie';
+import { IMovie } from '../../types/movie';
 
 import { convertDuration } from '../../utils/convertDuration';
 
 import styles from './MovieCard.module.css';
 
 interface MovieCardProps {
-  card: ICard;
-  cbBtnClick: (card: ICard) => void;
+  card: IMovie;
+  cbBtnClick: (card: IMovie) => void;
   extraClass?: string;
 }
 

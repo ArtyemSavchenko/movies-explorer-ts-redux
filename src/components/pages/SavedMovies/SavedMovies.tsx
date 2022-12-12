@@ -4,8 +4,10 @@ import MoviesCardList from '../../MoviesCardList/MoviesCardList';
 import SearchMovieForm from '../../SearchMovieForm/SearchMovieForm';
 import Empty from '../../EmptySearch/EmptySearch';
 
-import { usePushNotification } from '../../../components/shared/Notifications/Notifications';
+import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 import { CurrentUser } from '../../../contexts/CurrentUserContext';
+import { IMovie } from '../../../types/movie';
+import { IUserProvider } from '../../../types/userProvider';
 
 import {
   filterByDuration,
@@ -13,12 +15,12 @@ import {
 } from '../../../utils/searchUtils';
 import { dislikeMovie } from '../../../utils/MainApi';
 
-import './SavedMovies.css';
+import styles from './SavedMovies.module.css';
 
 const SavedMovies = () => {
-  const { likedCards, setLikedCards } = useContext(CurrentUser);
+  const { likedCards, setLikedCards } = useContext<IUserProvider>(CurrentUser);
 
-  const [cards, setCards] = useState(likedCards);
+  const [cards, setCards] = useState<IMovie[]>(likedCards);
   const [searchString, setSearchString] = useState('');
   const [isShortMovies, setIsShortMovies] = useState(false);
   const [isFirstSearch, setIsFirstSearch] = useState(true);
@@ -35,13 +37,17 @@ const SavedMovies = () => {
     setIsFirstSearch(false);
   };
 
-  const handleDeleteCard = async (card) => {
+  const handleDeleteCard = async (card: IMovie) => {
     try {
+      if (!card._id) {
+        return console.error('Не передан card id');
+      }
+
       await dislikeMovie(card._id);
       setLikedCards(
         likedCards.filter((likedCard) => likedCard._id !== card._id)
       );
-    } catch (err) {
+    } catch (err: any) {
       pushNotification({
         type: 'error',
         text: err.message,
@@ -63,9 +69,9 @@ const SavedMovies = () => {
   }, [isShortMovies, likedCards]);
 
   return (
-    <section className="saved-movies">
+    <section className={styles.savedMovies}>
       <SearchMovieForm
-        extraClass="saved-movies__search-form"
+        extraClass={styles.savedMovies__searchForm}
         onSubmit={handleSearch}
         searchString={searchString}
         setSearchString={setSearchString}

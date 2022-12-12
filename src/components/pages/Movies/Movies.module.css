@@ -2,13 +2,13 @@
   padding: 80px 10px 0;
 }
 
-.movies__search-form {
+.movies__searchForm {
   padding-bottom: 50px;
   border-bottom: 1px solid #424242;
   margin: 0 4px 50px;
 }
 
-.movies__more-btn {
+.movies__moreBtn {
   display: none;
   width: 240px;
   margin: 80px auto 80px;
@@ -24,18 +24,18 @@
   line-height: 1.25;
 }
 
-.movies__more-btn_visible {
+.movies__moreBtn_visible {
   display: block;
 }
 
 @media (any-hover: hover) {
-  .movies__more-btn {
+  .movies__moreBtn {
     opacity: 0.8;
   }
 }
 
 @media (min-width: 768px) {
-  .movies__more-btn {
+  .movies__moreBtn {
     width: 320px;
   }
 }

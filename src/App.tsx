@@ -9,21 +9,19 @@ import Header from './components/Header/Header';
 import { usePushNotification } from './components/shared/Notifications/NotificationsProvider';
 import { CurrentUser } from './contexts/CurrentUserContext';
 import { ICurrentUser } from './types/user';
-import { ICard } from './types/movie';
+import { IMovie } from './types/movie';
 
 import { getLikedMovies, getUser } from './utils/MainApi';
 
 import styles from './App.module.css';
-
-type ISignIn = (user: ICurrentUser, callback?: () => void) => void;
-type ISignOut = (callback?: () => void) => void;
+import { ISignIn, ISignOut } from './types/userProvider';
 
 const App = () => {
   const [isCheckingToken, setIsCheckingToken] = useState(true);
   const pushNotification = usePushNotification();
 
   const [user, setUser] = useState<ICurrentUser | null>(null);
-  const [likedCards, setLikedCards] = useState<ICard[]>([]);
+  const [likedCards, setLikedCards] = useState<IMovie[]>([]);
 
   const signIn: ISignIn = async (user, callback) => {
     setUser(user);

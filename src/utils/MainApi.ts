@@ -1,4 +1,4 @@
-import { IMovie, ICard } from '../types/movie';
+import { IMovie } from '../types/movie';
 import { ICurrentUser, IToken } from '../types/user';
 import { checkApiError } from './checkApiError';
 
@@ -75,7 +75,7 @@ export const patchUser = async (
   return checkApiError(res);
 };
 
-export const likeMovie = async (movie: IMovie): Promise<ICard> => {
+export const likeMovie = async (movie: IMovie): Promise<IMovie> => {
   const res = await fetch(`${MAIN_BASE_URL}/movies`, {
     method: 'POST',
     headers: {
@@ -111,7 +111,7 @@ export const dislikeMovie = async (movieId: string) => {
   return checkApiError(res);
 };
 
-export const getLikedMovies = async (): Promise<ICard[]> => {
+export const getLikedMovies = async (): Promise<IMovie[]> => {
   const res = await fetch(`${MAIN_BASE_URL}/movies`, {
     headers: {
       Authorization: getToken(),

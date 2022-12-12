@@ -1,13 +1,13 @@
 import { FC } from 'react';
 
-import { ICard } from '../../types/movie';
+import { IMovie } from '../../types/movie';
 import MovieCard from '../MovieCard/MovieCard';
 
 import styles from './MoviesCardList.module.css';
 
 interface MoviesCardListProps {
-  cards: ICard[];
-  cbBtnClick: () => void;
+  cards: IMovie[];
+  cbBtnClick: (card: IMovie) => void;
 }
 
 const MoviesCardList: FC<MoviesCardListProps> = ({ cards, cbBtnClick }) => {
