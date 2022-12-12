@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { IMovie } from '../../types/movie';
 import MovieCard from '../MovieCard/MovieCard';
@@ -22,4 +22,4 @@ const MoviesCardList: FC<MoviesCardListProps> = ({ cards, cbBtnClick }) => {
   );
 };
 
-export default MoviesCardList;
+export default memo(MoviesCardList);

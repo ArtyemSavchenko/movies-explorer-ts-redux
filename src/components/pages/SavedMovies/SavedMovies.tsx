@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import MoviesCardList from '../../MoviesCardList/MoviesCardList';
 import SearchMovieForm from '../../SearchMovieForm/SearchMovieForm';
-import Empty from '../../EmptySearch/EmptySearch';
+import EmptySearch from '../../EmptySearch/EmptySearch';
 
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 import { CurrentUser } from '../../../contexts/CurrentUserContext';
@@ -37,23 +37,26 @@ const SavedMovies = () => {
     setIsFirstSearch(false);
   };
 
-  const handleDeleteCard = async (card: IMovie) => {
-    try {
-      if (!card._id) {
-        return console.error('Не передан card id');
-      }
+  const handleDeleteCard = useCallback(
+    async (card: IMovie) => {
+      try {
+        if (!card._id) {
+          return console.error('Не передан card id');
+        }
 
-      await dislikeMovie(card._id);
-      setLikedCards(
-        likedCards.filter((likedCard) => likedCard._id !== card._id)
-      );
-    } catch (err: any) {
-      pushNotification({
-        type: 'error',
-        text: err.message,
-      });
-    }
-  };
+        await dislikeMovie(card._id);
+        setLikedCards(
+          likedCards.filter((likedCard) => likedCard._id !== card._id)
+        );
+      } catch (err: any) {
+        pushNotification({
+          type: 'error',
+          text: err.message,
+        });
+      }
+    },
+    [cards]
+  );
 
   useEffect(() => {
     if (isFirstSearch) {
@@ -80,9 +83,9 @@ const SavedMovies = () => {
       />
 
       {likedCards.length === 0 ? (
-        <Empty heading="(┬┬﹏┬┬)" text="Вы не добавили ни одного фильма" />
+        <EmptySearch heading="(┬┬﹏┬┬)" text="Вы не добавили ни одного фильма" />
       ) : cards.length === 0 ? (
-        <Empty heading="(┬┬﹏┬┬)" text="Ничего не найдено" />
+        <EmptySearch heading="(┬┬﹏┬┬)" text="Ничего не найдено" />
       ) : (
         <MoviesCardList cards={cards} cbBtnClick={handleDeleteCard} />
       )}

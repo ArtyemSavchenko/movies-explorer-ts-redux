@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import Preloader from '../../ui/Preloader/Preloader';
 import MoviesCardList from '../../MoviesCardList/MoviesCardList';
 import SearchMovieForm from '../../SearchMovieForm/SearchMovieForm';
-import Empty from '../../EmptySearch/EmptySearch';
+import EmptySearch from '../../EmptySearch/EmptySearch';
 
 import {
   filterByDuration,
@@ -62,17 +62,6 @@ const Movies = () => {
     setIsMoreResultBtnVisible(!isAllCards);
   };
 
-  const saveLastSearch = () => {
-    localStorage.setItem(
-      'last-result',
-      JSON.stringify({
-        searchString,
-        isShortMovies,
-        foundMovies,
-      })
-    );
-  };
-
   const addCardsPage = () => {
     const { newCards, isAllCards } = getNewPage(cards, filteredMovies);
 
@@ -82,16 +71,26 @@ const Movies = () => {
 
   useEffect(() => {
     if (!foundMovies) {
+      setIsEmptySearch(true);
       return;
     }
     setFilteredMovies(filterByDuration(foundMovies, isShortMovies));
-    saveLastSearch();
+
+    localStorage.setItem(
+      'last-result',
+      JSON.stringify({
+        searchString,
+        isShortMovies,
+        foundMovies,
+      })
+    );
   }, [foundMovies, isShortMovies]);
 
   useEffect(() => {
-    if (!filteredMovies) {
+    if (filteredMovies.length === 0) {
       return;
     }
+
     renderStartCards();
   }, [filteredMovies]);
 
@@ -142,11 +141,11 @@ const Movies = () => {
       });
     }
   };
-  const handleLikeOrDislikeCard = async (card: IMovie) => {
+  const handleLikeOrDislikeCard = useCallback(async (card: IMovie) => {
     user && card.owner !== user._id
       ? await likeCard(card)
       : await dislikeCard(card);
-  };
+  }, [cards]);
 
   const handleSearch = async () => {
     setIsLoading(true);
@@ -157,9 +156,9 @@ const Movies = () => {
     setIsMoreResultBtnVisible(false);
 
     try {
-      const formattedMovies = await getMovies();
+      const beatMovies = await getMovies();
 
-      setFoundMovies(filterBySearchString(formattedMovies, searchString));
+      setFoundMovies(filterBySearchString(beatMovies, searchString));
     } catch (err) {
       pushNotification({
         type: 'error',
@@ -200,7 +199,7 @@ const Movies = () => {
         <MoviesCardList cards={cards} cbBtnClick={handleLikeOrDislikeCard} />
       )}
       {isEmptySearch && !isLoading ? (
-        <Empty heading="╮（╯＿╰）╭" text="Ничего не нашлось" />
+        <EmptySearch heading="╮（╯＿╰）╭" text="Ничего не нашлось" />
       ) : null}
       <button
         className={classNames(
