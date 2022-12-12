@@ -6,14 +6,14 @@ import {
   useContext,
   useState,
 } from 'react';
-import { Notifications } from './Notifications';
+import { Notifications } from './Notifications/Notifications';
 import { INotification, INotificationElement } from './types/notification';
 import { generateId } from './utils/generateId';
 
 type INotificationsContext = (
   notification: INotification,
   delayClose?: number
-) => number;
+) => void;
 
 const NotificationsContext = createContext<INotificationsContext>(() => 0);
 
@@ -43,8 +43,6 @@ const NotificationsProvider: FC<INotificationsProvider> = ({
       }
 
       setNotifications((notifications) => [newNotification, ...notifications]);
-
-      return newId;
     },
     []
   );

@@ -1,15 +1,14 @@
 import { FC } from 'react';
 import { createPortal } from 'react-dom';
 
-import Notification from './Notification';
+import Notification from '../Notification/Notification';
 
-import { INotificationElement } from './types/notification';
+import { INotificationElement } from '../types/notification';
 
 import styles from './Notifications.module.css';
 
 interface NotificationsProps {
   notifications: INotificationElement[];
-  /**Функция, которая фильтрует массив уведомлений от уведомления с заданным id */
   closeNotification: (id: number) => void;
   delayClose?: number;
 }
