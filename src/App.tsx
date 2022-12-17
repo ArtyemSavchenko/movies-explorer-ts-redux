@@ -7,98 +7,72 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 
 import { usePushNotification } from './components/shared/Notifications/NotificationsProvider';
-import { CurrentUser } from './contexts/CurrentUserContext';
-import { ICurrentUser } from './types/user';
-import { IMovie } from './types/movie';
-
-import { getLikedMovies, getUser } from './utils/MainApi';
 
 import styles from './App.module.css';
-import { ISignIn, ISignOut } from './types/userProvider';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { setLoadingStatus } from './store/main/main';
+import { getLikedMoviesThunk, getUserThunk } from './store/main/thunks';
 
 const App = () => {
-  const [isCheckingToken, setIsCheckingToken] = useState(true);
+  const { loadingStatus } = useAppSelector(({ main }) => main);
+  const dispatch = useAppDispatch();
+
   const pushNotification = usePushNotification();
 
-  const [user, setUser] = useState<ICurrentUser | null>(null);
-  const [likedCards, setLikedCards] = useState<IMovie[]>([]);
-
-  const signIn: ISignIn = async (user, callback) => {
-    setUser(user);
-
-    if (callback) {
-      callback();
-    }
-  };
-
-  const signOut: ISignOut = (callback) => {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('last-result');
-    setUser(null);
-    setLikedCards([]);
-
-    if (callback) {
-      callback();
-    }
-  };
-
-  const providerValue = { user, signIn, signOut, likedCards, setLikedCards };
-
   useEffect(() => {
+    dispatch(setLoadingStatus('appLoading'));
+
     const checkToken = async () => {
       const token = localStorage.getItem('jwt');
       if (!token) {
-        localStorage.removeItem('last-result');
-        setIsCheckingToken(false);
+        localStorage.clear();
+        dispatch(setLoadingStatus(null));
+
         return;
       }
 
       try {
-        const user = await getUser();
-        signIn(user);
-      } catch (err: any) {
+        await dispatch(getUserThunk()).unwrap();
+      } catch (err) {
         pushNotification({
           type: 'error',
           heading: 'Не удалось авторизоваться',
           text: 'Токен недействителен',
         });
 
-        localStorage.removeItem('last-result');
-        localStorage.removeItem('jwt');
+        localStorage.clear();
 
-        setIsCheckingToken(false);
+        dispatch(setLoadingStatus(null));
         return;
       }
 
       try {
-        const likedMovies = await getLikedMovies();
-        setLikedCards(likedMovies);
+        await dispatch(getLikedMoviesThunk()).unwrap();
       } catch (err: any) {
         pushNotification({
           type: 'error',
           text: err.message,
         });
       } finally {
-        setIsCheckingToken(false);
+
+        dispatch(setLoadingStatus(null));
       }
     };
 
     checkToken();
   }, []);
 
-  return isCheckingToken ? (
+  return loadingStatus === 'appLoading' ? (
     <Preloader />
   ) : (
     <Suspense fallback={<Preloader />}>
-      <CurrentUser.Provider value={providerValue}>
-        <div className={styles.app}>
-          <Header />
-          <Main>
-            <Outlet />
-          </Main>
-          <Footer />
-        </div>
-      </CurrentUser.Provider>
+      <div className={styles.app}>
+        <Header />
+        <Main>
+          <Outlet />
+        </Main>
+        <Footer />
+      </div>
     </Suspense>
   );
 };

@@ -1,18 +1,17 @@
-import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+import { useAppSelector } from '../../store/hooks';
 
 import SignMenu from './SignMenu/SignMenu';
 import NavBar from './NavBar/NavBar';
 import LogoLink from '../ui/LogoLink/LogoLink';
 
-import { CurrentUser } from '../../contexts/CurrentUserContext';
 
 import styles from './Header.module.css';
 
 const Header = () => {
-  const { user } = useContext(CurrentUser);
   const location = useLocation();
+  const user = useAppSelector(({main}) => main.user);
 
   if (location.pathname === '/signin' || location.pathname === '/signup') {
     return null;
@@ -26,7 +25,7 @@ const Header = () => {
       )}
     >
       <LogoLink funny />
-      {user ? <NavBar /> : <SignMenu />}
+      {user !== null ? <NavBar /> : <SignMenu />}
     </header>
   );
 };

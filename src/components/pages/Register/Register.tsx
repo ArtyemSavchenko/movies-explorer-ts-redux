@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
 import LogoLink from '../../ui/LogoLink/LogoLink';
 import FormInput from '../../ui/FormInput/FormInput';
@@ -7,14 +7,16 @@ import FormBtn from '../../ui/FormBtn/FormBtn';
 import CustomLink from '../../ui/CustomLink/CustomLink';
 
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
-import { useValidationInput } from '../../../hook/useValidationInput';
-import { authorize, register } from '../../../utils/MainApi';
+import { useValidationInput } from '../../../hooks/useValidationInput';
 
-import { CurrentUser } from '../../../contexts/CurrentUserContext';
+import { useAppDispatch } from '../../../store/hooks';
+import { registerThunk } from '../../../store/main/thunks';
 
 import styles from './Register.module.css';
 
 const Register = () => {
+  const dispatch = useAppDispatch();
+
   const [name, nameErr, nameIsValid, onChangeName] = useValidationInput('', {
     required: true,
     isName: true,
@@ -26,7 +28,7 @@ const Register = () => {
     {
       required: true,
       isEmail: true,
-    },
+    }
   );
   const [password, passwordErr, passwordIsValid, onChangePassword] =
     useValidationInput('', {
@@ -44,9 +46,7 @@ const Register = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { signIn } = useContext(CurrentUser);
-
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const pushNotification = usePushNotification();
 
   const handleRegister: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -54,16 +54,7 @@ const Register = () => {
 
     setIsSubmitting(true);
     try {
-      const user = await register(email, password, name);
-
-      if (user) {
-        const { token } = await authorize(email, password);
-        localStorage.setItem('jwt', token);
-
-        signIn(user, () => {
-          navigate('/movies');
-        });
-      }
+      await dispatch(registerThunk({ name, email, password })).unwrap();
     } catch (err: any) {
       pushNotification({
         type: 'error',

@@ -1,21 +1,24 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import FormInput from '../../ui/FormInput/FormInput';
 import LogoLink from '../../ui/LogoLink/LogoLink';
 import FormBtn from '../../ui/FormBtn/FormBtn';
 import CustomLink from '../../ui/CustomLink/CustomLink';
 
-import { CurrentUser } from '../../../contexts/CurrentUserContext';
-
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
-import { authorize, getLikedMovies, getUser } from '../../../utils/MainApi';
 
-import { useValidationInput } from '../../../hook/useValidationInput';
+import { useValidationInput } from '../../../hooks/useValidationInput';
 
 import styles from './Login.module.css';
+import { setLoadingStatus } from '../../../store/main/main';
+import { authorizeThunk } from '../../../store/main/thunks';
 
 const Login = () => {
+  const loadingStatus = useAppSelector(({ main }) => main.loadingStatus);
+  const dispatch = useAppDispatch();
+
   const [email, emailErr, emailIsValid, onChangeEmail] = useValidationInput(
     '',
     {
@@ -37,34 +40,25 @@ const Login = () => {
     }
   }, [emailIsValid, passwordIsValid]);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const { signIn, setLikedCards } = useContext(CurrentUser);
   const navigate = useNavigate();
   const pushNotification = usePushNotification();
 
   const handleLogin: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    setIsSubmitting(true);
     try {
-      const { token } = await authorize(email, password);
-      localStorage.setItem('jwt', token);
+      await dispatch(authorizeThunk({ email, password })).unwrap();
+      navigate('/movie');
 
-      const user = await getUser();
-      signIn(user, () => {
-        navigate('/movies');
-      });
-
-      const likedMovies = await getLikedMovies();
-      setLikedCards(likedMovies);
+      // const likedMovies = await getLikedMovies();
+      // setLikedCards(likedMovies);
     } catch (err: any) {
       pushNotification({
         type: 'error',
         text: err.message,
       });
     } finally {
-      setIsSubmitting(false);
+      // setIsSubmitting(false);
     }
   };
 
@@ -73,7 +67,7 @@ const Login = () => {
       <LogoLink extraClass={styles.login__logoLink} funny />
       <p className={styles.login__title}>Рады видеть!</p>
       <form className={styles.login__form} onSubmit={handleLogin}>
-        <fieldset className={styles.login__fieldset} disabled={isSubmitting}>
+        <fieldset className={styles.login__fieldset} disabled={loadingStatus === 'submitting'}>
           <FormInput
             extraClass={styles.login__input}
             type="email"
@@ -98,7 +92,7 @@ const Login = () => {
         <FormBtn
           extraClass={styles.login__submitBtn}
           disabled={!isValidForm}
-          isLoading={isSubmitting}
+          isLoading={loadingStatus === 'submitting'}
         >
           Войти
         </FormBtn>

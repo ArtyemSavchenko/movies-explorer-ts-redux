@@ -1,24 +1,25 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import CustomLink from '../../ui/CustomLink/CustomLink';
 import ProfileInput from '../../ui/ProfileInput/ProfileInput';
 
-import { CurrentUser } from '../../../contexts/CurrentUserContext';
-
-import { useValidationInput } from '../../../hook/useValidationInput';
+import { useValidationInput } from '../../../hooks/useValidationInput';
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 
 import { patchUser } from '../../../utils/MainApi';
 
 import styles from './Profile.module.css';
 import classNames from 'classnames';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { patchUserThunk } from '../../../store/main/thunks';
 
 const Profile = () => {
-  const { user, signIn, signOut } = useContext(CurrentUser);
+  const { user } = useAppSelector(({ main }) => main);
+  const dispatch = useAppDispatch();
 
   const [name, nameErr, nameIsValid, onChangeName] = useValidationInput(
-    user.name,
+    user?.name,
     {
       required: true,
       isName: true,
@@ -27,7 +28,7 @@ const Profile = () => {
     }
   );
   const [email, emailErr, emailIsValid, onChangeEmail] = useValidationInput(
-    user.email,
+    user?.email,
     {
       required: true,
       isEmail: true,
@@ -48,7 +49,7 @@ const Profile = () => {
   }, [nameIsValid, emailIsValid, isDataChanged]);
 
   useEffect(() => {
-    if (name !== user.name || email !== user.email) {
+    if (name !== user?.name || email !== user?.email) {
       setIsFirstEditing(false);
       setIsDataChanged(true);
     } else {
@@ -66,18 +67,14 @@ const Profile = () => {
 
     setIsSubmitting(true);
     try {
-      const user = await patchUser(name, email);
+      await dispatch(patchUserThunk({ name, email })).unwrap();
 
-      if (user) {
-        setIsFirstEditing(true);
-
-        signIn(user);
-        pushNotification({
-          type: 'success',
-          heading: '(〃￣︶￣)人(￣︶￣〃)',
-          text: 'Данные успешно обновлены',
-        });
-      }
+      setIsFirstEditing(true);
+      pushNotification({
+        type: 'success',
+        heading: '(〃￣︶￣)人(￣︶￣〃)',
+        text: 'Данные успешно обновлены',
+      });
     } catch (err: any) {
       pushNotification({
         type: 'error',
@@ -89,13 +86,13 @@ const Profile = () => {
   };
 
   const handleSignOut = () => {
-    signOut(navigate('/'));
+    // signOut(navigate('/'));
   };
 
   return (
     <section className={styles.profile}>
       <div className={styles.profile__content}>
-        <p className={styles.profile__heading}>Привет, {user.name}!</p>
+        <p className={styles.profile__heading}>Привет, {user?.name}!</p>
 
         <form className={styles.profile__form}>
           <fieldset

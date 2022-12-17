@@ -73,7 +73,7 @@ const checkValidationErr: ICheckValidationErr = (value, params, errors) => {
 };
 
 type IValidationHook = (
-  initialState: string,
+  initialState: string | undefined,
   params: IValidationParams,
   errors?: IValidationErrors
 ) => [
@@ -84,7 +84,7 @@ type IValidationHook = (
 ];
 
 export const useValidationInput: IValidationHook = (
-  initialState,
+  initialState = '',
   params,
   errors
 ) => {

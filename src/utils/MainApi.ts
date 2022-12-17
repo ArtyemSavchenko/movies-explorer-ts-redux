@@ -1,5 +1,11 @@
 import { IMovie } from '../types/movie';
-import { ICurrentUser, IToken } from '../types/user';
+import {
+  IAuthorizeData,
+  ICurrentUser,
+  IRegisterData,
+  IToken,
+  IUser,
+} from '../types/user';
 import { checkApiError } from './checkApiError';
 
 import { MAIN_BASE_URL } from './constants';
@@ -8,10 +14,10 @@ const getToken = () => {
   return `Bearer ${localStorage.getItem('jwt')}`;
 };
 
-export const authorize = async (
-  email: string,
-  password: string
-): Promise<IToken> => {
+export const authorize = async ({
+  email,
+  password,
+}: IAuthorizeData): Promise<IToken> => {
   const res = await fetch(`${MAIN_BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -26,11 +32,11 @@ export const authorize = async (
   return checkApiError(res);
 };
 
-export const register = async (
-  email: string,
-  password: string,
-  name: string
-): Promise<ICurrentUser> => {
+export const register = async ({
+  email,
+  password,
+  name,
+}: IRegisterData): Promise<ICurrentUser> => {
   const res = await fetch(`${MAIN_BASE_URL}/signup`, {
     method: 'POST',
     headers: {
@@ -42,6 +48,7 @@ export const register = async (
       name,
     }),
   });
+  console.dir(res);
 
   return checkApiError(res);
 };
@@ -56,10 +63,10 @@ export const getUser = async (): Promise<ICurrentUser> => {
   return checkApiError(res);
 };
 
-export const patchUser = async (
-  name: string,
-  email: string
-): Promise<ICurrentUser> => {
+export const patchUser = async ({
+  name,
+  email,
+}: IUser): Promise<ICurrentUser> => {
   const res = await fetch(`${MAIN_BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: {
@@ -100,7 +107,9 @@ export const likeMovie = async (movie: IMovie): Promise<IMovie> => {
   return checkApiError(res);
 };
 
-export const dislikeMovie = async (movieId: string) => {
+export const dislikeMovie = async (
+  movieId: string
+): Promise<{ message: string }> => {
   const res = await fetch(`${MAIN_BASE_URL}/movies/${movieId}`, {
     method: 'DELETE',
     headers: {

@@ -6,7 +6,6 @@ import BurgerButton from '../BurgerButton/BurgerButton';
 import BtnClose from '../../ui/BtnClose/BtnClose';
 
 import styles from './NavBar.module.css';
-import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 
 type IActiveNavClassSetter = ({ isActive }: { isActive: boolean }) => string;
 
@@ -43,17 +42,8 @@ const NavBar = () => {
     }
   }, [isOpened, handleEscClosing]);
 
-  const pushNotification = usePushNotification();
-  const push = () => {
-      pushNotification({
-        type: 'success',
-        text: 'push',
-      });
-  };
-
   return (
     <div className="navBar">
-      <button onClick={push}>PUSH</button>
       <BurgerButton
         extraClass={styles.navBar__burgerBtn}
         aria-label="Открыть меню"

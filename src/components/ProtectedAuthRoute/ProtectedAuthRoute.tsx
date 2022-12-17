@@ -1,13 +1,14 @@
-import { FC, useContext } from 'react';
+import { ComponentType, FC } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { ProtectedAuthRouteProps } from '../../types/ProtectedAuthRouteProps';
-import { CurrentUser } from '../../contexts/CurrentUserContext';
+import { useAppSelector } from '../../store/hooks';
 
-const ProtectedAuthRoute: FC<ProtectedAuthRouteProps> = ({ Component }) => {
-  const { user } = useContext(CurrentUser);
+const ProtectedAuthRoute: FC<{ Component: ComponentType }> = ({
+  Component,
+}) => {
+  const { user } = useAppSelector(({ main }) => main);
 
-  return user ? <Component /> : <Navigate to="/signin" />;
+  return user === null ? <Navigate to="/signin" /> : <Component />;
 };
 
 export default ProtectedAuthRoute;

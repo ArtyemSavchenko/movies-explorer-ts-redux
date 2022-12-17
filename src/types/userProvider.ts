@@ -1,3 +1,4 @@
+//TODO delete this file after redux
 import { IMovie } from "./movie";
 import { ICurrentUser } from "./user";
 
