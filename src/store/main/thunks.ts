@@ -17,19 +17,28 @@ import {
   register,
 } from '../../utils/MainApi';
 
-export const getUserThunk = createAsyncThunk('main/getUserThunk', async () => {
-  return await getUser();
-});
+export const getUserDataThunk = createAsyncThunk(
+  'main/getUserDataThunk',
+  async () => {
+    const user = await getUser();
+    const likedMovies = await getLikedMovies();
 
-export const authorizeThunk = createAsyncThunk<ICurrentUser, IAuthorizeData>(
-  'main/authorizeThunk',
-  async ({ email, password }) => {
-    const { token } = await authorize({ email, password });
-    localStorage.setItem('jwt', token);
-
-    return await getUser();
+    return { user, likedMovies };
   }
 );
+
+export const authorizeThunk = createAsyncThunk<
+  { user: ICurrentUser; likedMovies: IMovie[] },
+  IAuthorizeData
+>('main/authorizeThunk', async ({ email, password }) => {
+  const { token } = await authorize({ email, password });
+  localStorage.setItem('jwt', token);
+
+  const user = await getUser();
+  const likedMovies = await getLikedMovies();
+
+  return { user, likedMovies };
+});
 
 export const registerThunk = createAsyncThunk<ICurrentUser, IRegisterData>(
   'main/registerThunk',
@@ -51,12 +60,12 @@ export const patchUserThunk = createAsyncThunk<ICurrentUser, IUser>(
   }
 );
 
-export const getLikedMoviesThunk = createAsyncThunk(
-  'main/getLikedMoviesThunk',
-  async () => {
-    return await getLikedMovies();
-  }
-);
+// export const getLikedMoviesThunk = createAsyncThunk(
+//   'main/getLikedMoviesThunk',
+//   async () => {
+//     return await getLikedMovies();
+//   }
+// );
 
 export const likeMovieThunk = createAsyncThunk<IMovie, IMovie>(
   'main/likeMovieThunk',

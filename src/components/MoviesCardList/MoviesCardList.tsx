@@ -7,15 +7,14 @@ import styles from './MoviesCardList.module.css';
 
 interface MoviesCardListProps {
   cards: IMovie[];
-  cbBtnClick: (card: IMovie) => void;
 }
 
-const MoviesCardList: FC<MoviesCardListProps> = ({ cards, cbBtnClick }) => {
+const MoviesCardList: FC<MoviesCardListProps> = ({ cards }) => {
   return (
     <ul className={styles.moviesCardList}>
       {cards.map((card) => (
         <li key={card.movieId}>
-          <MovieCard card={card} cbBtnClick={cbBtnClick} />
+          <MovieCard card={card} />
         </li>
       ))}
     </ul>

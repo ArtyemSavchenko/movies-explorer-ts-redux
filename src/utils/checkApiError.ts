@@ -1,10 +1,12 @@
+import ApiError, { IApiError } from '../errors/apiError';
+
 export async function checkApiError<T>(res: Response): Promise<T> {
   if (!res.ok) {
     const err = await res.json();
     err.status = res.status;
 
-    return Promise.reject(err);
+    throw new ApiError(err);
   }
 
   return res.json();
-};
+}

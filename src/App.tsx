@@ -6,63 +6,50 @@ import Preloader from './components/ui/Preloader/Preloader';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { getUserDataThunk } from './store/main/thunks';
 import { usePushNotification } from './components/shared/Notifications/NotificationsProvider';
 
 import styles from './App.module.css';
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import { setLoadingStatus } from './store/main/main';
-import { getLikedMoviesThunk, getUserThunk } from './store/main/thunks';
 
 const App = () => {
-  const { loadingStatus } = useAppSelector(({ main }) => main);
-  const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
+  const dispatch = useAppDispatch();
   const pushNotification = usePushNotification();
 
   useEffect(() => {
-    dispatch(setLoadingStatus('appLoading'));
-
     const checkToken = async () => {
+      setIsLoading(true);
+
       const token = localStorage.getItem('jwt');
       if (!token) {
         localStorage.clear();
-        dispatch(setLoadingStatus(null));
+        setIsLoading(false);
 
         return;
       }
 
       try {
-        await dispatch(getUserThunk()).unwrap();
-      } catch (err) {
+        await dispatch(getUserDataThunk()).unwrap();
+      } catch (err: any) {
         pushNotification({
           type: 'error',
-          heading: 'Не удалось авторизоваться',
-          text: 'Токен недействителен',
+          heading: err.message,
         });
 
         localStorage.clear();
 
-        dispatch(setLoadingStatus(null));
         return;
-      }
-
-      try {
-        await dispatch(getLikedMoviesThunk()).unwrap();
-      } catch (err: any) {
-        pushNotification({
-          type: 'error',
-          text: err.message,
-        });
       } finally {
-
-        dispatch(setLoadingStatus(null));
+        setIsLoading(false);
       }
     };
 
     checkToken();
   }, []);
 
-  return loadingStatus === 'appLoading' ? (
+  return isLoading ? (
     <Preloader />
   ) : (
     <Suspense fallback={<Preloader />}>

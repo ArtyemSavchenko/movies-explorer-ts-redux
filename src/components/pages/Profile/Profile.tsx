@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
 
 import CustomLink from '../../ui/CustomLink/CustomLink';
 import ProfileInput from '../../ui/ProfileInput/ProfileInput';
 
 import { useValidationInput } from '../../../hooks/useValidationInput';
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
-
-import { patchUser } from '../../../utils/MainApi';
-
-import styles from './Profile.module.css';
-import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { patchUserThunk } from '../../../store/main/thunks';
+
+import styles from './Profile.module.css';
+import { resetMainState } from '../../../store/main/main';
 
 const Profile = () => {
   const { user } = useAppSelector(({ main }) => main);
@@ -57,7 +55,6 @@ const Profile = () => {
     }
   }, [name, email, user]);
 
-  const navigate = useNavigate();
   const pushNotification = usePushNotification();
 
   const handleEditProfile: React.PointerEventHandler<
@@ -86,7 +83,8 @@ const Profile = () => {
   };
 
   const handleSignOut = () => {
-    // signOut(navigate('/'));
+    dispatch(resetMainState());
+    localStorage.clear();
   };
 
   return (

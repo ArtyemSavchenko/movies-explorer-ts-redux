@@ -1,31 +1,36 @@
-import { FC, useContext, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
 import LikeBtn from '../ui/LikeBtn/LikeBtn';
 
-import { CurrentUser } from '../../contexts/CurrentUserContext';
 import { IMovie } from '../../types/movie';
 
 import { convertDuration } from '../../utils/convertDuration';
 
 import styles from './MovieCard.module.css';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { dislikeMovieThunk, likeMovieThunk } from '../../store/main/thunks';
 
 interface MovieCardProps {
   card: IMovie;
-  cbBtnClick: (card: IMovie) => void;
   extraClass?: string;
 }
 
-const MovieCard: FC<MovieCardProps> = ({ extraClass, card, cbBtnClick }) => {
+const MovieCard: FC<MovieCardProps> = ({ extraClass, card }) => {
   const location = useLocation();
-  const { user } = useContext(CurrentUser);
+  const { user } = useAppSelector(({ main }) => main);
+  const dispatch = useAppDispatch();
 
   const [isLikeRequest, setIsLikeRequest] = useState(false);
 
   const handleLikeClick = async () => {
     setIsLikeRequest(true);
-    await cbBtnClick(card);
+    if (card.owner && card._id) {
+      await dispatch(dislikeMovieThunk(card._id));
+    } else {
+      await dispatch(likeMovieThunk(card));
+    }
     setIsLikeRequest(false);
   };
 
@@ -56,7 +61,7 @@ const MovieCard: FC<MovieCardProps> = ({ extraClass, card, cbBtnClick }) => {
         <LikeBtn
           extraClass={styles.movieCard__btn}
           type="button"
-          isLiked={card.owner === user._id}
+          isLiked={card.owner === user?._id}
           onClick={handleLikeClick}
           disabled={isLikeRequest}
         >

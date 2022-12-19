@@ -9,17 +9,21 @@ interface IBeatMovieState {
 
 const initialState: IBeatMovieState = {
   movies: [],
-}
+};
 
 const beatMovieSlice = createSlice({
   name: 'beatMovies',
   initialState,
-  reducers: {},
+  reducers: {
+    resetBeatMovieState: () => initialState,
+  },
   extraReducers: (builder) => {
     builder.addCase(getBeatMoviesThunk.fulfilled, (state, action) => {
       state.movies = action.payload;
     });
   },
 });
+
+export const { resetBeatMovieState } = beatMovieSlice.actions;
 
 export default beatMovieSlice.reducer;

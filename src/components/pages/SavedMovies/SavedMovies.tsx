@@ -16,60 +16,22 @@ import {
 import { dislikeMovie } from '../../../utils/MainApi';
 
 import styles from './SavedMovies.module.css';
+import { useAppSelector } from '../../../store/hooks';
 
 const SavedMovies = () => {
-  const { likedCards, setLikedCards } = useContext<IUserProvider>(CurrentUser);
-
-  const [cards, setCards] = useState<IMovie[]>(likedCards);
+  const { likedMovies } = useAppSelector(({ main }) => main);
+  const [cards, setCards] = useState<IMovie[]>(likedMovies);
   const [searchString, setSearchString] = useState('');
   const [isShortMovies, setIsShortMovies] = useState(false);
   const [isFirstSearch, setIsFirstSearch] = useState(true);
 
   const pushNotification = usePushNotification();
 
-  const handleSearch = () => {
-    setCards(
-      filterBySearchString(
-        filterByDuration(likedCards, isShortMovies),
-        searchString
-      )
-    );
-    setIsFirstSearch(false);
-  };
-
-  const handleDeleteCard = useCallback(
-    async (card: IMovie) => {
-      try {
-        if (!card._id) {
-          return console.error('Не передан card id');
-        }
-
-        await dislikeMovie(card._id);
-        setLikedCards(
-          likedCards.filter((likedCard) => likedCard._id !== card._id)
-        );
-      } catch (err: any) {
-        pushNotification({
-          type: 'error',
-          text: err.message,
-        });
-      }
-    },
-    [cards]
-  );
+  const handleSearch = () => {};
 
   useEffect(() => {
-    if (isFirstSearch) {
-      setCards(likedCards);
-    } else {
-      setCards(
-        filterBySearchString(
-          filterByDuration(likedCards, isShortMovies),
-          searchString
-        )
-      );
-    }
-  }, [isShortMovies, likedCards]);
+    setCards(likedMovies);
+  }, [likedMovies]);
 
   return (
     <section className={styles.savedMovies}>
@@ -82,12 +44,15 @@ const SavedMovies = () => {
         setIsShortMovies={setIsShortMovies}
       />
 
-      {likedCards.length === 0 ? (
-        <EmptySearch heading="(┬┬﹏┬┬)" text="Вы не добавили ни одного фильма" />
+      {likedMovies.length === 0 ? (
+        <EmptySearch
+          heading="(┬┬﹏┬┬)"
+          text="Вы не добавили ни одного фильма"
+        />
       ) : cards.length === 0 ? (
         <EmptySearch heading="(┬┬﹏┬┬)" text="Ничего не найдено" />
       ) : (
-        <MoviesCardList cards={cards} cbBtnClick={handleDeleteCard} />
+        <MoviesCardList cards={cards} />
       )}
     </section>
   );

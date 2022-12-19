@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import FormInput from '../../ui/FormInput/FormInput';
@@ -8,16 +7,13 @@ import FormBtn from '../../ui/FormBtn/FormBtn';
 import CustomLink from '../../ui/CustomLink/CustomLink';
 
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
-
 import { useValidationInput } from '../../../hooks/useValidationInput';
+import { authorizeThunk } from '../../../store/main/thunks';
 
 import styles from './Login.module.css';
-import { setLoadingStatus } from '../../../store/main/main';
-import { authorizeThunk } from '../../../store/main/thunks';
 
 const Login = () => {
   const loadingStatus = useAppSelector(({ main }) => main.loadingStatus);
-  const dispatch = useAppDispatch();
 
   const [email, emailErr, emailIsValid, onChangeEmail] = useValidationInput(
     '',
@@ -32,6 +28,10 @@ const Login = () => {
     });
 
   const [isValidForm, setIsValidForm] = useState(true);
+
+  const dispatch = useAppDispatch();
+  const pushNotification = usePushNotification();
+
   useEffect(() => {
     if (emailIsValid && passwordIsValid) {
       setIsValidForm(true);
@@ -40,25 +40,16 @@ const Login = () => {
     }
   }, [emailIsValid, passwordIsValid]);
 
-  const navigate = useNavigate();
-  const pushNotification = usePushNotification();
-
   const handleLogin: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     try {
       await dispatch(authorizeThunk({ email, password })).unwrap();
-      navigate('/movie');
-
-      // const likedMovies = await getLikedMovies();
-      // setLikedCards(likedMovies);
     } catch (err: any) {
       pushNotification({
         type: 'error',
         text: err.message,
       });
-    } finally {
-      // setIsSubmitting(false);
     }
   };
 
@@ -67,7 +58,10 @@ const Login = () => {
       <LogoLink extraClass={styles.login__logoLink} funny />
       <p className={styles.login__title}>Рады видеть!</p>
       <form className={styles.login__form} onSubmit={handleLogin}>
-        <fieldset className={styles.login__fieldset} disabled={loadingStatus === 'submitting'}>
+        <fieldset
+          className={styles.login__fieldset}
+          disabled={loadingStatus === 'submitting'}
+        >
           <FormInput
             extraClass={styles.login__input}
             type="email"
