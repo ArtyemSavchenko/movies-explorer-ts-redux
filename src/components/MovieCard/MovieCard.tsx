@@ -1,16 +1,16 @@
 import { FC, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import classNames from 'classnames';
 
 import LikeBtn from '../ui/LikeBtn/LikeBtn';
 
 import { IMovie } from '../../types/movie';
-
 import { convertDuration } from '../../utils/convertDuration';
+import { dislikeMovieThunk, likeMovieThunk } from '../../store/main/thunks';
+import { usePushNotification } from '../shared/Notifications/NotificationsProvider';
 
 import styles from './MovieCard.module.css';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { dislikeMovieThunk, likeMovieThunk } from '../../store/main/thunks';
 
 interface MovieCardProps {
   card: IMovie;
@@ -21,17 +21,26 @@ const MovieCard: FC<MovieCardProps> = ({ extraClass, card }) => {
   const location = useLocation();
   const { user } = useAppSelector(({ main }) => main);
   const dispatch = useAppDispatch();
+  const pushNotification = usePushNotification();
 
   const [isLikeRequest, setIsLikeRequest] = useState(false);
 
   const handleLikeClick = async () => {
     setIsLikeRequest(true);
-    if (card.owner && card._id) {
-      await dispatch(dislikeMovieThunk(card._id));
-    } else {
-      await dispatch(likeMovieThunk(card));
+    try {
+      if (card.owner && card._id) {
+        await dispatch(dislikeMovieThunk(card._id)).unwrap();
+      } else {
+        await dispatch(likeMovieThunk(card)).unwrap();
+      }
+    } catch (err: any) {
+      pushNotification({
+        type: 'error',
+        text: err.message,
+      });
+    } finally {
+      setIsLikeRequest(false);
     }
-    setIsLikeRequest(false);
   };
 
   const convertedDuration = useMemo(

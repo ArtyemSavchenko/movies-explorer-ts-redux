@@ -11,9 +11,11 @@ import { getUserDataThunk } from './store/main/thunks';
 import { usePushNotification } from './components/shared/Notifications/NotificationsProvider';
 
 import styles from './App.module.css';
+import { resetMainState } from './store/main/main';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { errorCode } = useAppSelector(({ main }) => main);
 
   const dispatch = useAppDispatch();
   const pushNotification = usePushNotification();
@@ -48,6 +50,13 @@ const App = () => {
 
     checkToken();
   }, []);
+
+  useEffect(() => {
+    if (errorCode === '401') {
+      dispatch(resetMainState());
+      localStorage.clear();
+    }
+  }, [errorCode]);
 
   return isLoading ? (
     <Preloader />

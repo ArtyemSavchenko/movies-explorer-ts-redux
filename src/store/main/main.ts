@@ -17,12 +17,14 @@ interface IMainState {
   user: ICurrentUser | null;
   loadingStatus: ILoadingStatus;
   likedMovies: IMovie[];
+  errorCode?: string;
 }
 
 const initialState: IMainState = {
   user: null,
   loadingStatus: 'appLoading',
   likedMovies: [],
+  errorCode: '',
 };
 
 const mainSlice = createSlice({
@@ -38,6 +40,9 @@ const mainSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
+    builder.addCase(getUserDataThunk.rejected, (state, action) => {
+      state.errorCode = action.error.code;
+    });
     builder.addCase(getUserDataThunk.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.likedMovies = action.payload.likedMovies;
@@ -46,8 +51,9 @@ const mainSlice = createSlice({
     builder.addCase(authorizeThunk.pending, (state) => {
       state.loadingStatus = 'submitting';
     });
-    builder.addCase(authorizeThunk.rejected, (state) => {
+    builder.addCase(authorizeThunk.rejected, (state, action) => {
       state.loadingStatus = null;
+      state.errorCode = action.error.code;
     });
     builder.addCase(authorizeThunk.fulfilled, (state, action) => {
       state.user = action.payload.user;
@@ -58,8 +64,9 @@ const mainSlice = createSlice({
     builder.addCase(registerThunk.pending, (state) => {
       state.loadingStatus = 'submitting';
     });
-    builder.addCase(registerThunk.rejected, (state) => {
+    builder.addCase(registerThunk.rejected, (state, action) => {
       state.loadingStatus = null;
+      state.errorCode = action.error.code;
     });
     builder.addCase(registerThunk.fulfilled, (state, action) => {
       state.user = action.payload;
@@ -69,18 +76,25 @@ const mainSlice = createSlice({
     builder.addCase(patchUserThunk.pending, (state) => {
       state.loadingStatus = 'submitting';
     });
-    builder.addCase(patchUserThunk.rejected, (state) => {
+    builder.addCase(patchUserThunk.rejected, (state, action) => {
       state.loadingStatus = null;
+      state.errorCode = action.error.code;
     });
     builder.addCase(patchUserThunk.fulfilled, (state, action) => {
       state.user = action.payload;
       state.loadingStatus = null;
     });
 
+    builder.addCase(likeMovieThunk.rejected, (state, action) => {
+      state.errorCode = action.error.code;
+    });
     builder.addCase(likeMovieThunk.fulfilled, (state, action) => {
       state.likedMovies.unshift(action.payload);
     });
 
+    builder.addCase(dislikeMovieThunk.rejected, (state, action) => {
+      state.errorCode = action.error.code;
+    });
     builder.addCase(dislikeMovieThunk.fulfilled, (state, action) => {
       if (state.likedMovies) {
         state.likedMovies = state.likedMovies.filter(

@@ -4,10 +4,10 @@ export interface IApiError {
 }
 
 export default class ApiError extends Error {
-  name: string;
+  code: string;
 
   constructor(error: IApiError) {
     super(error.message);
-    this.name = String(error.status);
+    this.code = String(error.status);
   }
 }
