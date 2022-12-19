@@ -2,82 +2,55 @@ import { FC, ChangeEventHandler, FormEventHandler, useState } from 'react';
 import classNames from 'classnames';
 
 import { UIForm } from '../../types/ui';
-import ModernCheckbox from '../ui/ModernCheckbox/ModernCheckbox';
 
 import styles from './SearchMovieForm.module.css';
+import MovieDurationRadio, {
+  IMovieDuration,
+} from '../ui/MovieDurationRadio/MovieDurationRadio';
 
 interface SearchMovieFormProps extends UIForm {
   extraClass?: string;
-  onSubmit: () => void;
-  isShortMovies: boolean;
-  setIsShortMovies: (isShortMovie: boolean) => void;
+  durationType: IMovieDuration;
+  setDurationType: (type: IMovieDuration) => void;
   searchString: string;
   setSearchString: (searchString: string) => void;
 }
 
 const SearchMovieForm: FC<SearchMovieFormProps> = ({
   extraClass,
-  onSubmit,
-  isShortMovies,
-  setIsShortMovies,
+  durationType,
+  setDurationType,
   searchString,
   setSearchString,
-  ...restProps
 }) => {
-  const [searchErr, setSearchErr] = useState('');
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-
-    if (!searchString) {
-      setSearchErr('Нужно ввести ключевое слово');
-      return;
-    }
-
-    onSubmit();
-  };
-
-  const changeMovieName: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setSearchErr('');
+  const handleChangeInput: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchString(e.target.value);
   };
 
-  const changeIsShortMovie: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setIsShortMovies(e.target.checked)
-  }
-
   return (
-    <form
-      className={classNames(styles.searchMovieForm, extraClass)}
-      onSubmit={handleSubmit}
-      noValidate
-      {...restProps}
-    >
+    <div className={classNames(styles.searchMovieForm, extraClass)}>
       <div className={styles.searchMovieForm__searchBox}>
         <input
           className={styles.searchMovieForm__input}
           value={searchString}
-          onChange={changeMovieName}
           type="text"
           placeholder="Фильм"
-          name="name"
-          required
+          onChange={handleChangeInput}
         />
         <button
-          className={styles.searchMovieForm__submitBtn}
-          type="submit"
+          className={styles.searchMovieForm__clearBtn}
+          type="button"
+          onClick={() => setSearchString('')}
           aria-label="Найти фильм."
         />
       </div>
-      <p className={styles.searchMovieForm__err}>{searchErr}</p>
 
-      <ModernCheckbox
-        extraClass={styles.searchMovieForm__shortMovies}
-        label="Короткометражки"
-        checked={isShortMovies}
-        onChange={changeIsShortMovie}
+      <MovieDurationRadio
+        durationType={durationType}
+        setDurationType={setDurationType}
+        extraClass={styles.searchMovieForm__durationType}
       />
-    </form>
+    </div>
   );
 };
 

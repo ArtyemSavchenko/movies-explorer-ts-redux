@@ -6,13 +6,13 @@ import MovieCard from '../MovieCard/MovieCard';
 import styles from './MoviesCardList.module.css';
 
 interface MoviesCardListProps {
-  cards: IMovie[];
+  cards: IMovie[] | null;
 }
 
 const MoviesCardList: FC<MoviesCardListProps> = ({ cards }) => {
   return (
     <ul className={styles.moviesCardList}>
-      {cards.map((card) => (
+      {cards?.map((card) => (
         <li key={card.movieId}>
           <MovieCard card={card} />
         </li>
