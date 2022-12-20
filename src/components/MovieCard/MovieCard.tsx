@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, lazy, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import classNames from 'classnames';
@@ -48,6 +48,8 @@ const MovieCard: FC<MovieCardProps> = ({ extraClass, card }) => {
     [card.duration]
   );
 
+  const isLiked = card.owner === user?._id;
+
   return (
     <article className={classNames(styles.movieCard, extraClass)}>
       <h2 className={styles.movieCard__name}>{card.nameRU}</h2>
@@ -70,11 +72,11 @@ const MovieCard: FC<MovieCardProps> = ({ extraClass, card }) => {
         <LikeBtn
           extraClass={styles.movieCard__btn}
           type="button"
-          isLiked={card.owner === user?._id}
+          isLiked={isLiked}
           onClick={handleLikeClick}
           disabled={isLikeRequest}
         >
-          Сохранить
+          {isLiked ? 'Сохранить' : 'Удалить'}
         </LikeBtn>
       ) : (
         <button
