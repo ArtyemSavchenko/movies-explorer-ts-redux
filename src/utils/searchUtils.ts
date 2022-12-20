@@ -1,7 +1,11 @@
+import { IMovieDuration } from '../components/ui/MovieDurationRadio/MovieDurationRadio';
 import { IMovie } from '../types/movie';
 import { SHORT_MOVIE_DURATION } from './constants';
 
-export const filterBySearchString = (movies: IMovie[], searchString: string) => {
+export const filterBySearchString = (
+  movies: IMovie[],
+  searchString: string
+) => {
   if (!searchString) {
     return movies;
   }
@@ -60,4 +64,23 @@ export const getNewPage = (renderedCards: IMovie[], allCards: IMovie[]) => {
     renderedCards.length + newCards.length >= allCards.length ? true : false;
 
   return { newCards, isAllCards };
+};
+
+export const filterByParams = (
+  cards: IMovie[],
+  searchString: string,
+  movieDuration: IMovieDuration
+): IMovie[] => {
+  let filteredMovies = searchString
+    ? filterBySearchString(cards, searchString)
+    : cards;
+
+  if (movieDuration === 'long') {
+    filteredMovies = filterByDuration(filteredMovies, false);
+  }
+  if (movieDuration === 'short') {
+    filteredMovies = filterByDuration(filteredMovies, true);
+  }
+
+  return filteredMovies;
 };

@@ -46,7 +46,6 @@ const Register = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // const navigate = useNavigate();
   const pushNotification = usePushNotification();
 
   const handleRegister: React.FormEventHandler<HTMLFormElement> = async (e) => {

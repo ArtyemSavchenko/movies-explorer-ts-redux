@@ -11,10 +11,8 @@ import { IMovieDuration } from '../../ui/MovieDurationRadio/MovieDurationRadio';
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 import { getBeatMoviesThunk } from '../../../store/beatMovies/thunks';
 import { resetBeatMovieState } from '../../../store/beatMovies/beatMovies';
-import {
-  filterByDuration,
-  filterBySearchString,
-} from '../../../utils/searchUtils';
+import { filterByParams } from '../../../utils/searchUtils';
+import { debounce } from '../../../utils/debounce';
 
 import styles from './Movies.module.css';
 
@@ -33,6 +31,7 @@ const Movies = () => {
 
   const [searchString, setSearchString] = useState('');
   const [movieDuration, setMovieDuration] = useState<IMovieDuration>('all');
+  const [isFiltering, setIsFiltering] = useState(false);
 
   const pushNotification = usePushNotification();
 
@@ -49,18 +48,7 @@ const Movies = () => {
       return;
     }
 
-    let filteredMovies = searchString
-      ? filterBySearchString(cards, searchString)
-      : cards;
-
-    if (movieDuration === 'long') {
-      filteredMovies = filterByDuration(filteredMovies, false);
-    }
-    if (movieDuration === 'short') {
-      filteredMovies = filterByDuration(filteredMovies, true);
-    }
-
-    setFilteredMovies(filteredMovies);
+    setFilteredMovies(filterByParams(cards, searchString, movieDuration));
   };
 
   useEffect(() => {
@@ -89,9 +77,19 @@ const Movies = () => {
 
   useEffect(() => {
     if (cards) {
+      setIsFiltering(true);
+      debounce(() => {
+        filterMovies();
+        setIsFiltering(false);
+      }, 300);
+    }
+  }, [searchString, movieDuration]);
+
+  useEffect(() => {
+    if (cards) {
       filterMovies();
     }
-  }, [searchString, movieDuration, cards]);
+  }, [cards]);
 
   const emptySearch = filteredMovies !== null && filteredMovies?.length === 0;
 
@@ -104,12 +102,12 @@ const Movies = () => {
         durationType={movieDuration}
         setDurationType={setMovieDuration}
       />
-      {isFetchBeatMovies ? (
+      {isFetchBeatMovies || isFiltering ? (
         <Preloader />
       ) : (
         <MoviesCardList cards={filteredMovies} />
       )}
-      {emptySearch ? (
+      {emptySearch && !isFiltering ? (
         <EmptySearch heading="╮（╯＿╰）╭" text="Ничего не нашлось" />
       ) : null}
     </section>

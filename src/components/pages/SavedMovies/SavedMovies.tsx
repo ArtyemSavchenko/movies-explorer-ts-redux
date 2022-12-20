@@ -4,14 +4,12 @@ import { useAppSelector } from '../../../store/hooks';
 import MoviesCardList from '../../MoviesCardList/MoviesCardList';
 import SearchMovieForm from '../../SearchMovieForm/SearchMovieForm';
 import EmptySearch from '../../EmptySearch/EmptySearch';
+import Preloader from '../../ui/Preloader/Preloader';
 
 import { IMovie } from '../../../types/movie';
 import { IMovieDuration } from '../../ui/MovieDurationRadio/MovieDurationRadio';
-
-import {
-  filterByDuration,
-  filterBySearchString,
-} from '../../../utils/searchUtils';
+import { filterByParams } from '../../../utils/searchUtils';
+import { debounce } from '../../../utils/debounce';
 
 import styles from './SavedMovies.module.css';
 
@@ -23,29 +21,31 @@ const SavedMovies = () => {
   const [searchString, setSearchString] = useState('');
   const [movieDuration, setMovieDuration] = useState<IMovieDuration>('all');
 
-   useEffect(() => {
+  const [isFiltering, setIsFiltering] = useState(false);
+
+  useEffect(() => {
     setFilteredMovies(likedMovies);
   }, [likedMovies]);
 
-  useEffect(() => {
+  const filterMovies = () => {
     if (!likedMovies) {
       return;
     }
 
-    let filteredMovies = searchString
-      ? filterBySearchString(likedMovies, searchString)
-      : likedMovies;
+    setFilteredMovies(filterByParams(likedMovies, searchString, movieDuration));
+  };
 
-    if (movieDuration === 'long') {
-      filteredMovies = filterByDuration(filteredMovies, false);
-    }
-    if (movieDuration === 'short') {
-      filteredMovies = filterByDuration(filteredMovies, true);
-    }
+  useEffect(() => {
+    setIsFiltering(true);
+    debounce(() => {
+      filterMovies();
+      setIsFiltering(false);
+    }, 300);
+  }, [searchString, movieDuration]);
 
-    setFilteredMovies(filteredMovies);
-  }, [searchString, movieDuration, likedMovies])
-
+  useEffect(() => {
+    filterMovies();
+  }, [likedMovies]);
 
   const emptySearch = filteredMovies !== null && filteredMovies?.length === 0;
 
@@ -59,17 +59,23 @@ const SavedMovies = () => {
         setDurationType={setMovieDuration}
       />
 
-      {likedMovies.length === 0 ? (
-        <EmptySearch
-          heading="(┬┬﹏┬┬)"
-          text="Вы не добавили ни одного фильма"
-        />
-      ) : emptySearch ? (
-        <EmptySearch heading="(┬┬﹏┬┬)" text="Ничего не найдено" />
+      {isFiltering && likedMovies.length !== 0 ? (
+        <Preloader />
       ) : (
         <MoviesCardList cards={filteredMovies} />
+      )}
+      {emptySearch && !isFiltering && likedMovies.length !== 0 ? (
+        <EmptySearch heading="(┬┬﹏┬┬)" text="Ничего не найдено" />
+      ) : null}
+
+      {likedMovies.length === 0 && (
+        <EmptySearch
+          heading="(┬┬﹏┬┬)"
+          text="Вы не сохранили ни одного фильма"
+        />
       )}
     </section>
   );
 };
+
 export default SavedMovies;
