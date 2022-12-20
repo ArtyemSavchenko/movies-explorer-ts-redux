@@ -1,4 +1,10 @@
-import { FC, ChangeEventHandler, FormEventHandler, useState } from 'react';
+import {
+  FC,
+  ChangeEventHandler,
+  FormEventHandler,
+  useState,
+  useCallback,
+} from 'react';
 import classNames from 'classnames';
 
 import { UIForm } from '../../types/ui';
@@ -23,9 +29,12 @@ const SearchMovieForm: FC<SearchMovieFormProps> = ({
   searchString,
   setSearchString,
 }) => {
-  const handleChangeInput: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setSearchString(e.target.value);
-  };
+  const handleChangeInput: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      setSearchString(e.target.value);
+    },
+    []
+  );
 
   return (
     <div className={classNames(styles.searchMovieForm, extraClass)}>

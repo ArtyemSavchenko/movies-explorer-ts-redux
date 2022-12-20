@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import CustomLink from '../../ui/CustomLink/CustomLink';
@@ -57,35 +57,34 @@ const Profile = () => {
 
   const pushNotification = usePushNotification();
 
-  const handleEditProfile: React.PointerEventHandler<
-    HTMLButtonElement
-  > = async (e) => {
-    e.preventDefault();
+  const handleEditProfile: React.PointerEventHandler<HTMLButtonElement> =
+    useCallback(async (e) => {
+      e.preventDefault();
 
-    setIsSubmitting(true);
-    try {
-      await dispatch(patchUserThunk({ name, email })).unwrap();
+      setIsSubmitting(true);
+      try {
+        await dispatch(patchUserThunk({ name, email })).unwrap();
 
-      setIsFirstEditing(true);
-      pushNotification({
-        type: 'success',
-        heading: '(〃￣︶￣)人(￣︶￣〃)',
-        text: 'Данные успешно обновлены',
-      });
-    } catch (err: any) {
-      pushNotification({
-        type: 'error',
-        text: err.message,
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+        setIsFirstEditing(true);
+        pushNotification({
+          type: 'success',
+          heading: '(〃￣︶￣)人(￣︶￣〃)',
+          text: 'Данные успешно обновлены',
+        });
+      } catch (err: any) {
+        pushNotification({
+          type: 'error',
+          text: err.message,
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
+    }, []);
 
-  const handleSignOut = () => {
+  const handleSignOut = useCallback(() => {
     dispatch(resetMainState());
     localStorage.clear();
-  };
+  }, []);
 
   return (
     <section className={styles.profile}>
@@ -103,9 +102,6 @@ const Profile = () => {
               type="text"
               value={name}
               onChange={onChangeName}
-              required
-              minLength={2}
-              maxLength={30}
               error={nameErr}
             />
             <ProfileInput
@@ -114,7 +110,6 @@ const Profile = () => {
               type="email"
               value={email}
               onChange={onChangeEmail}
-              required
               error={emailErr}
             />
 

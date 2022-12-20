@@ -1,4 +1,4 @@
-import { FC, useId } from 'react';
+import { FC, memo, useId } from 'react';
 import classNames from 'classnames';
 
 import { UIInput } from '../../../types/ui';
@@ -38,4 +38,4 @@ const FormInput: FC<FormInputProps> = ({
   );
 };
 
-export default FormInput;
+export default memo(FormInput);

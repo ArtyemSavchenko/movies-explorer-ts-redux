@@ -5,7 +5,7 @@ import styles from './AboutProject.module.css';
 
 const AboutProject = () => {
   return (
-    <section className={styles.aboutProject} id="aboutProject">
+    <section className={styles.aboutProject} id="about-project">
       <HeadingUnderlined extraClass={styles.aboutProject__heading}>
         О проекте
       </HeadingUnderlined>

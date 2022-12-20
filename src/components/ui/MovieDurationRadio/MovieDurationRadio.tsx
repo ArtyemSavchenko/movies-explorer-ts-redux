@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import styles from './MovieDurationRadio.module.css';
 
@@ -73,4 +73,4 @@ const MovieDurationRadio: FC<MovieDurationRadioProps> = ({
   );
 };
 
-export default MovieDurationRadio;
+export default memo(MovieDurationRadio);

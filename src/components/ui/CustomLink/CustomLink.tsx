@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, memo, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -78,4 +78,4 @@ const CustomLink: FC<CustomLinkProps> = ({
   }
 };
 
-export default CustomLink;
+export default memo(CustomLink);
