@@ -57,29 +57,30 @@ const Profile = () => {
 
   const pushNotification = usePushNotification();
 
-  const handleEditProfile: React.PointerEventHandler<HTMLButtonElement> =
-    useCallback(async (e) => {
-      e.preventDefault();
+  const handleEditProfile: React.PointerEventHandler<
+    HTMLButtonElement
+  > = async (e) => {
+    e.preventDefault();
 
-      setIsSubmitting(true);
-      try {
-        await dispatch(patchUserThunk({ name, email })).unwrap();
+    setIsSubmitting(true);
+    try {
+      await dispatch(patchUserThunk({ name, email })).unwrap();
 
-        setIsFirstEditing(true);
-        pushNotification({
-          type: 'success',
-          heading: '(〃￣︶￣)人(￣︶￣〃)',
-          text: 'Данные успешно обновлены',
-        });
-      } catch (err: any) {
-        pushNotification({
-          type: 'error',
-          text: err.message,
-        });
-      } finally {
-        setIsSubmitting(false);
-      }
-    }, []);
+      setIsFirstEditing(true);
+      pushNotification({
+        type: 'success',
+        heading: '(〃￣︶￣)人(￣︶￣〃)',
+        text: 'Данные успешно обновлены',
+      });
+    } catch (err: any) {
+      pushNotification({
+        type: 'error',
+        text: err.message,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleSignOut = useCallback(() => {
     dispatch(resetMainState());
