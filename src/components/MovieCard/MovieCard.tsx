@@ -1,4 +1,4 @@
-import { FC, lazy, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import classNames from 'classnames';
@@ -77,7 +77,7 @@ const MovieCard: FC<MovieCardProps> = ({ extraClass, card }) => {
           onClick={handleLikeClick}
           disabled={isLikeRequest}
         >
-          {isLiked ? 'Сохранить' : 'Удалить'}
+          {isLiked ? 'Удалить' : 'Сохранить'}
         </LikeBtn>
       ) : (
         <button

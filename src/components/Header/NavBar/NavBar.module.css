@@ -87,6 +87,8 @@
 
 .navBar__link_active {
   position: relative;
+  color: var(--ui-accent-color);
+  pointer-events: none;
 }
 
 .navBar__link_active::before {
@@ -105,6 +107,11 @@
   background-color: #313131;
 
   transition: opacity var(--out-duration) linear;
+}
+
+.navBar__btn_active {
+  background-color: var(--ui-accent-color);
+  pointer-events: none;
 }
 
 @media (any-hover: hover) {

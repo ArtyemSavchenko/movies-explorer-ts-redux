@@ -102,6 +102,7 @@ export const useValidationInput: IValidationHook = (
 
     setIsValid(!err);
     setErr(err);
+
   }, [params, errors]);
 
   return [value, err, isValid, onChange];
