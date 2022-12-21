@@ -60,13 +60,6 @@ export const patchUserThunk = createAsyncThunk<ICurrentUser, IUser>(
   }
 );
 
-// export const getLikedMoviesThunk = createAsyncThunk(
-//   'main/getLikedMoviesThunk',
-//   async () => {
-//     return await getLikedMovies();
-//   }
-// );
-
 export const likeMovieThunk = createAsyncThunk<IMovie, IMovie>(
   'main/likeMovieThunk',
   async (movie) => {

@@ -64,6 +64,7 @@ const MovieCard: FC<MovieCardProps> = ({ extraClass, card }) => {
         <img
           className={styles.movieCard__cover}
           src={card.image}
+          loading="lazy"
           alt="Постер фильма."
         />
       </a>
