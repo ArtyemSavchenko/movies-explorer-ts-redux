@@ -1,8 +1,8 @@
 # movies-explorer-frontend-ts-redux
-`React` `TypeScript` `Redux`
-`React Router 6` `Redux Toolkit` `Lazy loading`
+`React` `TypeScript` `Redux`  
+`React Router 6` `Redux Toolkit` `Lazy loading`  
 
-SPA для поиска фильмов фестиваля BeatFilm. Мы можем искать фильмы по ключевым словам и сохранять понравившиеся. Проект представляет собой переписанную на TypeScript с использованием Redux версию проекта [movies-explorer](https://github.com/ArtyemSavchenko/movies-explorer-frontend).
+SPA для поиска фильмов фестиваля BeatFilm. Мы можем искать фильмы по ключевым словам и сохранять понравившиеся. Проект представляет собой ремейк проекта [movies-explorer](https://github.com/ArtyemSavchenko/movies-explorer-frontend), переписанный с использованием TypeScript и Redux.
 
 Из интересного:
 * используется `React.lazy`,
