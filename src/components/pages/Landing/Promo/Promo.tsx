@@ -1,25 +1,14 @@
-import promoImg from '../../../../images/promo-logo.svg';
-
 import styles from './Promo.module.css';
 
 const Promo = () => {
   return (
     <section className={styles.promo}>
-      <img
-        className={styles.promo__img}
-        src={promoImg}
-        alt="Планета земля, нарисованная из слов веб."
-      />
-      <h1 className={styles.promo__heading}>
-        Учебный проект студента факультета{' '}
-        <span className="promo__noWrap">Веб-разработки</span>.
-      </h1>
-      <p className={styles.promo__subheading}>
-        Листайте ниже, чтобы узнать больше про этот проект и&nbsp;его создателя.
-      </p>
-      <a className={styles.promo__btnMore} href="#about-project">
-        Узнать больше
-      </a>
+      <h1 className={styles.promo__heading}>поиск фильмов</h1>
+      <h2 className={styles.promo__subheading}>
+        Яндекс.Практикум <span className={styles.promo__separator}/>{' '}
+        BeatFilm
+      </h2>
+      <h3 className={styles.promo__training}>учебный проект</h3>
     </section>
   );
 };

@@ -5,7 +5,7 @@ import App from '../App';
 import ProtectedAuthRoute from '../components/ProtectedAuthRoute/ProtectedAuthRoute';
 import ProtectedNotAuthRoute from '../components/ProtectedNotAuthRoute/ProtectedNotAuthRoute';
 
-const Landing = lazy(() => import('../components/pages/Landing/Landing'));
+const Promo = lazy(() => import('../components/pages/Landing/Promo/Promo'));
 const NotFound = lazy(() => import('../components/pages/NotFound/NotFound'));
 const Register = lazy(() => import('../components/pages/Register/Register'));
 const Profile = lazy(() => import('../components/pages/Profile/Profile'));
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Landing />,
+        element: <Promo />,
       },
       {
         path: 'movies',
