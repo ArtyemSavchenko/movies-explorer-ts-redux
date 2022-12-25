@@ -1,6 +1,5 @@
 import { MOVIE_BASE_URL, MOVIE_COVER_URL } from '../utils/constants';
 import { IBeatMovie, IMovie } from '../types/movie';
-
 import { checkApiError } from './checkApiError';
 
 export const getMovies = async (): Promise<IMovie[]> => {

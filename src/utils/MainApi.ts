@@ -48,7 +48,6 @@ export const register = async ({
       name,
     }),
   });
-  console.dir(res);
 
   return checkApiError(res);
 };

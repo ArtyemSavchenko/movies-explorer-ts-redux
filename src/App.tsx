@@ -9,12 +9,13 @@ import Header from './components/Header/Header';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { getUserDataThunk } from './store/main/thunks';
 import { usePushNotification } from './components/shared/Notifications/NotificationsProvider';
+import { resetMainState } from './store/main/main';
 
 import styles from './App.module.css';
-import { resetMainState } from './store/main/main';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  
   const { errorCode } = useAppSelector(({ main }) => main);
 
   const dispatch = useAppDispatch();

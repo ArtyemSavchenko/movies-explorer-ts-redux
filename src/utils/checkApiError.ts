@@ -1,4 +1,4 @@
-import ApiError, { IApiError } from '../errors/apiError';
+import ApiError from '../errors/apiError';
 
 export async function checkApiError<T>(res: Response): Promise<T> {
   if (!res.ok) {

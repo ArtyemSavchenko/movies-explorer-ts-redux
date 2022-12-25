@@ -5,7 +5,7 @@ import App from '../App';
 import ProtectedAuthRoute from '../components/ProtectedAuthRoute/ProtectedAuthRoute';
 import ProtectedNotAuthRoute from '../components/ProtectedNotAuthRoute/ProtectedNotAuthRoute';
 
-const Promo = lazy(() => import('../components/pages/Landing/Promo/Promo'));
+const Promo = lazy(() => import('../components/pages/Promo/Promo'));
 const NotFound = lazy(() => import('../components/pages/NotFound/NotFound'));
 const Register = lazy(() => import('../components/pages/Register/Register'));
 const Profile = lazy(() => import('../components/pages/Profile/Profile'));

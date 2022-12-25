@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -26,4 +26,4 @@ const LogoLink: FC<LogoLinkProps> = ({ extraClass, funny }) => {
   );
 };
 
-export default LogoLink;
+export default memo(LogoLink);

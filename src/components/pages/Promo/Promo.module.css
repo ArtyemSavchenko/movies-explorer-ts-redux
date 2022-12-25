@@ -6,7 +6,7 @@
   padding: 30px 10px;
 
   background-color: var(--promo-bg-color);
-  background-image: url('../../../../images/movie-feed.svg');
+  background-image: url('../../../images/movie-feed.svg');
   background-repeat: repeat-x;
   background-size: auto 50%;
   background-position: center;
