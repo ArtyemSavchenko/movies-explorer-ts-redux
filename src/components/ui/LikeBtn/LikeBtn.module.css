@@ -47,11 +47,13 @@
   background-position: center;
   background-size: 10px 7px;
 
-  transition: transform step-end var(--out-duration), opacity var(--out-duration);
+  transition: transform step-end var(--out-duration),
+    opacity var(--out-duration);
 }
 
 .likeBtn_isLiked::before {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
-  transition: transform var(--in-duration), opacity step-start var(--in-duration);
+  transition: transform var(--in-duration),
+    opacity step-start var(--in-duration);
 }

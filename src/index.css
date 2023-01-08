@@ -12,8 +12,8 @@
 
   --main-font: 'Inter', 'Arial', sans-serif;
 
-  --in-duration: .15s;
-  --out-duration: .25s;
+  --in-duration: 0.15s;
+  --out-duration: 0.25s;
 
   scroll-behavior: smooth;
 }

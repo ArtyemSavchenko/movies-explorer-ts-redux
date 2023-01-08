@@ -3,9 +3,10 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(.33);
+    transform: scale(0.2);
   }
-  80%, 100% {
+  80%,
+  100% {
     transform: scale(1);
   }
 }
@@ -21,7 +22,7 @@
   display: grid;
   place-content: center;
 
-  --spinner-el-size: .7em;
+  --spinner-el-size: 0.6em;
 }
 
 @media (any-hover: hover) {
@@ -47,7 +48,7 @@
   background-color: var(--ui-accent-color);
   border-radius: 50%;
 
-  animation: dot-animation 1s infinite .2s;
+  animation: dot-animation 1s infinite 0.2s;
 }
 
 .formBtn__spinner::before {
@@ -67,5 +68,5 @@
   height: var(--spinner-el-size);
   background-color: var(--ui-accent-color);
   border-radius: 50%;
-  animation: dot-animation 1s infinite .4s;
+  animation: dot-animation 1s infinite 0.4s;
 }

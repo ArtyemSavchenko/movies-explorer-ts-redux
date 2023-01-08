@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import Preloader from '../../ui/Preloader/Preloader';
 import MoviesCardList from '../../MoviesCardList/MoviesCardList';
@@ -8,6 +7,8 @@ import EmptySearch from '../../EmptySearch/EmptySearch';
 
 import { IMovie } from '../../../types/movie';
 import { IMovieDuration } from '../../ui/MovieDurationRadio/MovieDurationRadio';
+
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 import { getBeatMoviesThunk } from '../../../store/beatMovies/thunks';
 import { resetBeatMovieState } from '../../../store/beatMovies/beatMovies';
@@ -91,10 +92,13 @@ const Movies = () => {
     }
   }, [cards]);
 
-  const emptySearch = filteredMovies !== null && filteredMovies?.length === 0;
+  //TODO filteredMovies !== null - лишнее получается?
+  const isEmptySearch =
+    !isFiltering && filteredMovies !== null && filteredMovies?.length === 0;
+  const isLoading = isFetchBeatMovies || isFiltering;
 
   return (
-    <section className={styles.movies}>
+    <section className={styles.movie}>
       <SearchMovieForm
         extraClass={styles.movies__searchForm}
         searchString={searchString}
@@ -102,14 +106,10 @@ const Movies = () => {
         durationType={movieDuration}
         setDurationType={setMovieDuration}
       />
-      {isFetchBeatMovies || isFiltering ? (
-        <Preloader />
-      ) : (
-        <MoviesCardList cards={filteredMovies} />
-      )}
-      {emptySearch && !isFiltering ? (
+      {isLoading ? <Preloader /> : <MoviesCardList cards={filteredMovies} />}
+      {isEmptySearch && (
         <EmptySearch heading="╮（╯＿╰）╭" text="Ничего не нашлось" />
-      ) : null}
+      )}
     </section>
   );
 };

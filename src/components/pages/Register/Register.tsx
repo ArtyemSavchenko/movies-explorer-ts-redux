@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 
 import LogoLink from '../../ui/LogoLink/LogoLink';
 import FormInput from '../../ui/FormInput/FormInput';

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../../store/hooks';
 
 import MoviesCardList from '../../MoviesCardList/MoviesCardList';
 import SearchMovieForm from '../../SearchMovieForm/SearchMovieForm';
@@ -7,6 +6,7 @@ import EmptySearch from '../../EmptySearch/EmptySearch';
 import Preloader from '../../ui/Preloader/Preloader';
 
 import { IMovie } from '../../../types/movie';
+import { useAppSelector } from '../../../store/hooks';
 import { IMovieDuration } from '../../ui/MovieDurationRadio/MovieDurationRadio';
 import { filterByParams } from '../../../utils/searchUtils';
 import { debounce } from '../../../utils/debounce';
@@ -47,7 +47,14 @@ const SavedMovies = () => {
     filterMovies();
   }, [likedMovies]);
 
-  const emptySearch = filteredMovies !== null && filteredMovies?.length === 0;
+  //TODO filteredMovies !== null - лишнее получается?
+  const isEmptySearch =
+    !isFiltering &&
+    filteredMovies !== null &&
+    filteredMovies?.length === 0 &&
+    likedMovies.length !== 0;
+  const isLoading = isFiltering && likedMovies.length !== 0;
+  const isNoLikedMovies = likedMovies.length === 0;
 
   return (
     <section className={styles.savedMovies}>
@@ -59,20 +66,17 @@ const SavedMovies = () => {
         setDurationType={setMovieDuration}
       />
 
-      {isFiltering && likedMovies.length !== 0 ? (
-        <Preloader />
-      ) : (
-        <MoviesCardList cards={filteredMovies} />
-      )}
-      {emptySearch && !isFiltering && likedMovies.length !== 0 ? (
-        <EmptySearch heading="(┬┬﹏┬┬)" text="Ничего не найдено" />
-      ) : null}
-
-      {likedMovies.length === 0 && (
+      {isNoLikedMovies && (
         <EmptySearch
           heading="(┬┬﹏┬┬)"
           text="Вы не сохранили ни одного фильма"
         />
+      )}
+
+      {isLoading ? <Preloader /> : <MoviesCardList cards={filteredMovies} />}
+
+      {isEmptySearch && (
+        <EmptySearch heading="(┬┬﹏┬┬)" text="Ничего не найдено" />
       )}
     </section>
   );

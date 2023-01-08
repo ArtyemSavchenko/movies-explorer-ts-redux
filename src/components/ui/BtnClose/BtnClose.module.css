@@ -14,7 +14,7 @@
   transition: fill var(--out-duration) linear;
 }
 
-@media(any-hover: hover) {
+@media (any-hover: hover) {
   .btnClose:hover > .btnClose__svg {
     fill: var(--ui-accent-color);
     transition: fill var(--in-duration) linear;

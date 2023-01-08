@@ -10,7 +10,6 @@ interface BtnCloseProps extends UIButton {
 }
 
 const BtnClose: FC<BtnCloseProps> = ({ extraClass, ...restProps }) => {
-
   return (
     <button className={classNames(styles.btnClose, extraClass)} {...restProps}>
       <svg

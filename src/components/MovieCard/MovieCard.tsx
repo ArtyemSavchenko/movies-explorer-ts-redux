@@ -1,6 +1,5 @@
 import { FC, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import classNames from 'classnames';
 
 import LikeBtn from '../ui/LikeBtn/LikeBtn';
@@ -9,6 +8,7 @@ import { IMovie } from '../../types/movie';
 import { convertDuration } from '../../utils/convertDuration';
 import { dislikeMovieThunk, likeMovieThunk } from '../../store/main/thunks';
 import { usePushNotification } from '../shared/Notifications/NotificationsProvider';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import styles from './MovieCard.module.css';
 

@@ -1,4 +1,4 @@
-@keyframes preloader-inside-white {
+@keyframes preloader-inside-bgc {
   0% {
     -webkit-transform: scale(0, 0);
     -moz-transform: scale(0, 0);
@@ -15,7 +15,7 @@
   }
 }
 
-@keyframes preloader-inside-red {
+@keyframes preloader-inside-accent {
   0% {
     -webkit-transform: scale(0, 0);
     -moz-transform: scale(0, 0);
@@ -80,11 +80,11 @@
 
 .preloader__round::after {
   background: var(--ui-accent-color);
-  animation: preloader-inside-white 1s ease-in-out infinite;
+  animation: preloader-inside-bgc 1s ease-in-out infinite;
 }
 
 .preloader__round::before {
   z-index: 10;
   background: var(--dark-bg-color);
-  animation: preloader-inside-red 1s ease-in-out infinite;
+  animation: preloader-inside-accent 1s ease-in-out infinite;
 }

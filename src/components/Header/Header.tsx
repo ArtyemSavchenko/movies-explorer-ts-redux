@@ -6,14 +6,15 @@ import SignMenu from './SignMenu/SignMenu';
 import NavBar from './NavBar/NavBar';
 import LogoLink from '../ui/LogoLink/LogoLink';
 
-
 import styles from './Header.module.css';
+
+const pathsWithoutHeader = ['/signin', '/signup'];
 
 const Header = () => {
   const location = useLocation();
-  const user = useAppSelector(({main}) => main.user);
+  const user = useAppSelector(({ main }) => main.user);
 
-  if (location.pathname === '/signin' || location.pathname === '/signup') {
+  if (pathsWithoutHeader.includes(location.pathname)) {
     return null;
   }
 

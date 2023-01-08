@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import FormInput from '../../ui/FormInput/FormInput';
 import LogoLink from '../../ui/LogoLink/LogoLink';
 import FormBtn from '../../ui/FormBtn/FormBtn';
 import CustomLink from '../../ui/CustomLink/CustomLink';
 
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 import { useValidationInput } from '../../../hooks/useValidationInput';
 import { authorizeThunk } from '../../../store/main/thunks';

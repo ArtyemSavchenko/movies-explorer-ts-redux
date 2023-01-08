@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { PointerEventHandler, useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import CustomLink from '../../ui/CustomLink/CustomLink';
@@ -8,9 +8,9 @@ import { useValidationInput } from '../../../hooks/useValidationInput';
 import { usePushNotification } from '../../shared/Notifications/NotificationsProvider';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { patchUserThunk } from '../../../store/main/thunks';
+import { resetMainState } from '../../../store/main/main';
 
 import styles from './Profile.module.css';
-import { resetMainState } from '../../../store/main/main';
 
 const Profile = () => {
   const { user } = useAppSelector(({ main }) => main);
@@ -57,9 +57,9 @@ const Profile = () => {
 
   const pushNotification = usePushNotification();
 
-  const handleEditProfile: React.PointerEventHandler<
-    HTMLButtonElement
-  > = async (e) => {
+  const handleEditProfile: PointerEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
     e.preventDefault();
 
     setIsSubmitting(true);

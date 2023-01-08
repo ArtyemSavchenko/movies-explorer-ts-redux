@@ -15,7 +15,7 @@ import styles from './App.module.css';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const { errorCode } = useAppSelector(({ main }) => main);
 
   const dispatch = useAppDispatch();

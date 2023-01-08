@@ -4,14 +4,12 @@ import CustomLink from '../ui/CustomLink/CustomLink';
 
 import styles from './Footer.module.css';
 
+const pathsWithoutFooter = ['/signin', '/signup', '/profile'];
+
 const Footer = () => {
   const location = useLocation();
 
-  if (
-    location.pathname === '/signin' ||
-    location.pathname === '/signup' ||
-    location.pathname === '/profile'
-  ) {
+  if (pathsWithoutFooter.includes(location.pathname)) {
     return null;
   }
 

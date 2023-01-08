@@ -1,16 +1,13 @@
-import {
-  FC,
-  ChangeEventHandler,
-  useCallback,
-} from 'react';
+import { FC, ChangeEventHandler, useCallback } from 'react';
 import classNames from 'classnames';
 
 import { UIForm } from '../../types/ui';
 
-import styles from './SearchMovieForm.module.css';
 import MovieDurationRadio, {
   IMovieDuration,
 } from '../ui/MovieDurationRadio/MovieDurationRadio';
+
+import styles from './SearchMovieForm.module.css';
 
 interface SearchMovieFormProps extends UIForm {
   extraClass?: string;

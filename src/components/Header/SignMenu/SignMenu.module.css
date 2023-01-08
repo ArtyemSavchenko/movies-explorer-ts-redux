@@ -28,7 +28,7 @@
 @media (any-hover: hover) {
   .signMenu__btn:hover {
     color: #000;
-    opacity: .8;
+    opacity: 0.8;
     transition: opacity var(--in-duration) linear;
   }
 }
