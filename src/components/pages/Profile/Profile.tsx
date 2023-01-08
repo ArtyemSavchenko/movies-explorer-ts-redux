@@ -16,7 +16,7 @@ const Profile = () => {
   const { user } = useAppSelector(({ main }) => main);
   const dispatch = useAppDispatch();
 
-  const [name, nameErr, nameIsValid, onChangeName] = useValidationInput(
+  const [name, nameErr, isValidName, onChangeName] = useValidationInput(
     user?.name,
     {
       required: true,
@@ -25,7 +25,7 @@ const Profile = () => {
       maxLength: 30,
     }
   );
-  const [email, emailErr, emailIsValid, onChangeEmail] = useValidationInput(
+  const [email, emailErr, isValidEmail, onChangeEmail] = useValidationInput(
     user?.email,
     {
       required: true,
@@ -39,12 +39,12 @@ const Profile = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    if (nameIsValid && emailIsValid && isDataChanged) {
+    if (isValidName && isValidEmail && isDataChanged) {
       setIsValidForm(true);
     } else {
       setIsValidForm(false);
     }
-  }, [nameIsValid, emailIsValid, isDataChanged]);
+  }, [isValidName, isValidEmail, isDataChanged]);
 
   useEffect(() => {
     if (name !== user?.name || email !== user?.email) {

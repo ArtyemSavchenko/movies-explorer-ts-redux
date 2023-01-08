@@ -15,14 +15,14 @@ import styles from './Login.module.css';
 const Login = () => {
   const loadingStatus = useAppSelector(({ main }) => main.loadingStatus);
 
-  const [email, emailErr, emailIsValid, onChangeEmail] = useValidationInput(
+  const [email, emailErr, isValidEmail, onChangeEmail] = useValidationInput(
     '',
     {
       required: true,
       isEmail: true,
     }
   );
-  const [password, passwordErr, passwordIsValid, onChangePassword] =
+  const [password, passwordErr, isValidPassword, onChangePassword] =
     useValidationInput('', {
       required: true,
     });
@@ -33,12 +33,12 @@ const Login = () => {
   const pushNotification = usePushNotification();
 
   useEffect(() => {
-    if (emailIsValid && passwordIsValid) {
+    if (isValidEmail && isValidPassword) {
       setIsValidForm(true);
     } else {
       setIsValidForm(false);
     }
-  }, [emailIsValid, passwordIsValid]);
+  }, [isValidEmail, isValidPassword]);
 
   const handleLogin: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();

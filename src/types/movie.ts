@@ -1,4 +1,3 @@
-// for like
 export interface IMovie {
   country: string;
   description: string;

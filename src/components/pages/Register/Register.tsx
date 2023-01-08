@@ -16,32 +16,32 @@ import styles from './Register.module.css';
 const Register = () => {
   const dispatch = useAppDispatch();
 
-  const [name, nameErr, nameIsValid, onChangeName] = useValidationInput('', {
+  const [name, nameErr, isValidName, onChangeName] = useValidationInput('', {
     required: true,
     isName: true,
     minLength: 2,
     maxLength: 30,
   });
-  const [email, emailErr, emailIsValid, onChangeEmail] = useValidationInput(
+  const [email, emailErr, isValidEmail, onChangeEmail] = useValidationInput(
     '',
     {
       required: true,
       isEmail: true,
     }
   );
-  const [password, passwordErr, passwordIsValid, onChangePassword] =
+  const [password, passwordErr, isValidPassword, onChangePassword] =
     useValidationInput('', {
       required: true,
     });
 
   const [isValidForm, setIsValidForm] = useState(true);
   useEffect(() => {
-    if (nameIsValid && emailIsValid && passwordIsValid) {
+    if (isValidName && isValidEmail && isValidPassword) {
       setIsValidForm(true);
     } else {
       setIsValidForm(false);
     }
-  }, [nameIsValid, emailIsValid, passwordIsValid]);
+  }, [isValidName, isValidEmail, isValidPassword]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
