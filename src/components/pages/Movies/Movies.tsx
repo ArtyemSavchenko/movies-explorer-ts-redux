@@ -92,9 +92,8 @@ const Movies = () => {
     }
   }, [cards]);
 
-  //TODO filteredMovies !== null - лишнее получается?
   const isEmptySearch =
-    !isFiltering && filteredMovies !== null && filteredMovies?.length === 0;
+    !isFiltering && filteredMovies?.length === 0;
   const isLoading = isFetchBeatMovies || isFiltering;
 
   return (

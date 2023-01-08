@@ -5,6 +5,7 @@ import { checkApiError } from './checkApiError';
 export const getMovies = async (): Promise<IMovie[]> => {
   const res = await fetch(`${MOVIE_BASE_URL}`);
   const movies = await checkApiError<IBeatMovie[]>(res);
+  
   return movies.map((movie) => {
     return {
       country: movie.country,

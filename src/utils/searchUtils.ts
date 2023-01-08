@@ -35,37 +35,6 @@ export const filterByDuration = (movies: IMovie[], isShortMovies: boolean) => {
   });
 };
 
-export const getNewPage = (renderedCards: IMovie[], allCards: IMovie[]) => {
-  if (!renderedCards) {
-    renderedCards = [];
-  }
-
-  const docWidth = window.innerWidth;
-  const lineWidth = docWidth >= 1280 ? 3 : 2;
-
-  let newCards;
-
-  if (renderedCards.length === 0) {
-    const neededCards = docWidth >= 1280 ? 12 : docWidth >= 768 ? 8 : 5;
-    newCards = allCards.slice(0, neededCards);
-  } else {
-    const emptyCells =
-      docWidth < 768
-        ? 0
-        : (lineWidth - (renderedCards.length % lineWidth)) % lineWidth;
-
-    newCards = allCards.slice(
-      renderedCards.length,
-      renderedCards.length + emptyCells + lineWidth
-    );
-  }
-
-  const isAllCards =
-    renderedCards.length + newCards.length >= allCards.length ? true : false;
-
-  return { newCards, isAllCards };
-};
-
 export const filterByParams = (
   cards: IMovie[],
   searchString: string,

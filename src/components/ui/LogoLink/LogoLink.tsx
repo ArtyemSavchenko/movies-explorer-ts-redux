@@ -4,6 +4,8 @@ import classNames from 'classnames';
 
 import Logo from '../Logo/Logo';
 
+import { IActiveNavClassSetter } from '../../../types/ActiveNavClassSetter';
+
 import styles from './LogoLink.module.css';
 
 interface LogoLinkProps {
@@ -12,7 +14,7 @@ interface LogoLinkProps {
 }
 
 const LogoLink: FC<LogoLinkProps> = ({ extraClass, funny }) => {
-  const setLogoClass = ({ isActive }: { isActive?: boolean }) =>
+  const setLogoClass: IActiveNavClassSetter = ({ isActive }) =>
     classNames(extraClass, isActive && styles.logoLink_currentPage);
 
   return (

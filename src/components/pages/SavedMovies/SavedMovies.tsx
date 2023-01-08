@@ -47,10 +47,8 @@ const SavedMovies = () => {
     filterMovies();
   }, [likedMovies]);
 
-  //TODO filteredMovies !== null - лишнее получается?
   const isEmptySearch =
     !isFiltering &&
-    filteredMovies !== null &&
     filteredMovies?.length === 0 &&
     likedMovies.length !== 0;
   const isLoading = isFiltering && likedMovies.length !== 0;

@@ -16,15 +16,19 @@
   --out-duration: 0.25s;
 
   scroll-behavior: smooth;
+  
+  background-color: var(--dark-bg-color);
 }
 
-#root {
-  display: grid;
-  color: var(--base-text-color);
-
-  background-color: var(--dark-bg-color);
-
+#root {  
   min-height: 100vh;
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  
+  color: var(--base-text-color);
 }
 
 body {

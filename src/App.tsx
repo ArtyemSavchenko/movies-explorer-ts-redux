@@ -11,8 +11,6 @@ import { getUserDataThunk } from './store/main/thunks';
 import { usePushNotification } from './components/shared/Notifications/NotificationsProvider';
 import { resetMainState } from './store/main/main';
 
-import styles from './App.module.css';
-
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -63,13 +61,11 @@ const App = () => {
     <Preloader />
   ) : (
     <Suspense fallback={<Preloader />}>
-      <div className={styles.app}>
-        <Header />
-        <Main>
-          <Outlet />
-        </Main>
-        <Footer />
-      </div>
+      <Header />
+      <Main>
+        <Outlet />
+      </Main>
+      <Footer />
     </Suspense>
   );
 };

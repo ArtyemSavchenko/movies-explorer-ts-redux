@@ -5,9 +5,10 @@ import classNames from 'classnames';
 import BurgerButton from '../BurgerButton/BurgerButton';
 import BtnClose from '../../ui/BtnClose/BtnClose';
 
+import { IActiveNavClassSetter } from '../../../types/ActiveNavClassSetter';
+
 import styles from './NavBar.module.css';
 
-type IActiveNavClassSetter = ({ isActive }: { isActive: boolean }) => string;
 
 const NavBar = () => {
   const [isOpened, setIsOpened] = useState(false);
